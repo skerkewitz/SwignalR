@@ -19,20 +19,20 @@
 //  DEALINGS IN THE SOFTWARE.
 //
 
-#import "SREventSourceRequestSerializer.h"
-
-@implementation SREventSourceRequestSerializer
-
-#pragma mark - AFURLRequestSerializer
-
-- (NSURLRequest *)requestBySerializingRequest:(NSURLRequest *)request
-                               withParameters:(NSDictionary *)parameters
-                                        error:(NSError *__autoreleasing *)error
-{
-    NSMutableURLRequest *mutableRequest = [[super requestBySerializingRequest:request withParameters:parameters error:error] mutableCopy];
-    [mutableRequest setValue:@"text/event-stream" forHTTPHeaderField:@"Accept"];
-
-    return mutableRequest;
-}
-
-@end
+//#import "SREventSourceRequestSerializer.h"
+//
+//@implementation SREventSourceRequestSerializer
+//
+//#pragma mark - AFURLRequestSerializer
+//
+//- (NSURLRequest *)requestBySerializingRequest:(NSURLRequest *)request
+//                               withParameters:(NSDictionary *)parameters
+//                                        error:(NSError *__autoreleasing *)error
+//{
+//    NSMutableURLRequest *mutableRequest = [[super requestBySerializingRequest:request withParameters:parameters error:error] mutableCopy];
+//    [mutableRequest setValue:@"text/event-stream" forHTTPHeaderField:@"Accept"];
+//
+//    return mutableRequest;
+//}
+//
+//@end

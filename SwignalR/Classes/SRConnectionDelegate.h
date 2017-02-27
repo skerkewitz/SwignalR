@@ -21,7 +21,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SRConnectionInterface.h"
+
+@protocol SRConnectionInterface;
+typedef NS_ENUM(NSInteger, ConnectionState);
 
 @protocol SRConnectionDelegate<NSObject>
 @optional

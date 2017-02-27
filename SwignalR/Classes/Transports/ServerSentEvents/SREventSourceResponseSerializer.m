@@ -20,54 +20,54 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "SREventSourceResponseSerializer.h"
-
-@implementation SREventSourceResponseSerializer
-
-+ (instancetype)serializer {
-    return [[self alloc] init];
-}
-
-- (instancetype)init {
-    self = [super init];
-    if (!self) {
-        return nil;
-    }
-    
-    self.acceptableContentTypes = [NSSet setWithObjects:@"text/event-stream", nil];
-    
-    return self;
-}
-
-#pragma mark - AFURLResponseSerialization
-
-- (id)responseObjectForResponse:(NSURLResponse *)response
-                           data:(NSData *)data
-                          error:(NSError *__autoreleasing *)error
-{
-    return [super responseObjectForResponse:response data:data error:error];
-}
-
-#pragma mark - NSSecureCoding
-
-- (id)initWithCoder:(NSCoder *)decoder {
-    self = [super initWithCoder:decoder];
-    if (!self) {
-        return nil;
-    }
-    
-    return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)coder {
-    [super encodeWithCoder:coder];
-}
-
-#pragma mark - NSCopying
-
-- (id)copyWithZone:(NSZone *)zone {
-    SREventSourceResponseSerializer *serializer = [[[self class] allocWithZone:zone] init];
-    return serializer;
-}
-
-@end
+//#import "SREventSourceResponseSerializer.h"
+//
+//@implementation SREventSourceResponseSerializer
+//
+//+ (instancetype)serializer {
+//    return [[self alloc] init];
+//}
+//
+//- (instancetype)init {
+//    self = [super init];
+//    if (!self) {
+//        return nil;
+//    }
+//
+//    self.acceptableContentTypes = [NSSet setWithObjects:@"text/event-stream", nil];
+//
+//    return self;
+//}
+//
+//#pragma mark - AFURLResponseSerialization
+//
+//- (id)responseObjectForResponse:(NSURLResponse *)response
+//                           data:(NSData *)data
+//                          error:(NSError *__autoreleasing *)error
+//{
+//    return [super responseObjectForResponse:response data:data error:error];
+//}
+//
+//#pragma mark - NSSecureCoding
+//
+//- (id)initWithCoder:(NSCoder *)decoder {
+//    self = [super initWithCoder:decoder];
+//    if (!self) {
+//        return nil;
+//    }
+//
+//    return self;
+//}
+//
+//- (void)encodeWithCoder:(NSCoder *)coder {
+//    [super encodeWithCoder:coder];
+//}
+//
+//#pragma mark - NSCopying
+//
+//- (id)copyWithZone:(NSZone *)zone {
+//    SREventSourceResponseSerializer *serializer = [[[self class] allocWithZone:zone] init];
+//    return serializer;
+//}
+//
+//@end

@@ -1,9 +1,10 @@
 //
-//  SREventSourceRequestSerializer.h
+//  Serializable.swift
 //  SignalR
 //
-//  Created by Alex Billingsley on 2/1/16.
+//  Created by Alex Billingsley on 6/6/12.
 //  Copyright (c) 2011 DyKnow LLC. (http://dyknow.com/)
+//  Created by Stefan Kerkewitz on 02/03/2017.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
 //  documentation files (the "Software"), to deal in the Software without restriction, including without limitation
@@ -20,8 +21,15 @@
 //  DEALINGS IN THE SOFTWARE.
 //
 
-//#import <AFNetworking/AFURLRequestSerialization.h>
-//
-//@interface SREventSourceRequestSerializer : AFHTTPRequestSerializer
-//
-//@end
+import Foundation
+
+/**
+ * An `SRSerializable` defines the protocol that should be enforced if an NSObject is intended to be sent to a transport
+ *
+ * It should be noted that while all functions are optional at least one should be used for auto detected JSON serialization to work properly
+ */
+public protocol SRSerializable {
+
+    /** Conforms to SBJson (aka json-framework) allowing `NSObjects` to be serialized to JSON. */
+    func proxyForJson() -> [String: Any]
+}

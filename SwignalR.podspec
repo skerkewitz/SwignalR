@@ -32,14 +32,15 @@ TODO: Add long description of the pod here.
 
   s.source_files = 'SwignalR/Classes/**/*'
 
-  s.dependency 'AFNetworking', '~>2.0'
-  s.dependency 'SocketRocket', '~>0.4'
+  s.dependency 'Alamofire', '~> 4.3.0'
+  s.dependency 'Starscream', '~> 2.0.3'
+  s.dependency 'CocoaLumberjack/Swift', '~> 3.0.0'
   
   # s.resource_bundles = {
   #   'SwignalR' => ['SwignalR/Assets/*.png']
   # }
 
-  s.public_header_files = 'Pod/Classes/**/*.h'
+  #s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
 end

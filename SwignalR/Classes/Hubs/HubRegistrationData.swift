@@ -1,9 +1,10 @@
 //
-//  SREventSourceRequestSerializer.h
+//  HubRegistrationData.swift
 //  SignalR
 //
-//  Created by Alex Billingsley on 2/1/16.
+//  Created by Alex Billingsley on 11/2/11.
 //  Copyright (c) 2011 DyKnow LLC. (http://dyknow.com/)
+//  Created by Stefan Kerkewitz on 28/02/2017.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
 //  documentation files (the "Software"), to deal in the Software without restriction, including without limitation
@@ -20,8 +21,26 @@
 //  DEALINGS IN THE SOFTWARE.
 //
 
-//#import <AFNetworking/AFURLRequestSerialization.h>
-//
-//@interface SREventSourceRequestSerializer : AFHTTPRequestSerializer
-//
-//@end
+import Foundation
+
+
+/**
+ * An `SRHubRegistrationData` object defines the interface for registering subscriptions with a SignalR Hub
+ */
+struct SRHubRegistrationData: SRSerializable {
+
+    static let kName = "Name"
+
+    /** The name of the hub. */
+    let name: String
+
+    init(name: String) {
+        self.name = name
+    }
+
+    func proxyForJson() -> [String: Any] {
+        var dict = [String: Any]()
+        dict[SRHubRegistrationData.kName] = self.name
+        return dict
+    }
+}
