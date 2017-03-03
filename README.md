@@ -1,6 +1,6 @@
 # SwignalR
 
-A SignalR implementation in Swift (port of https://github.com/skerkewitz/SignalR-ObjC).
+A SignalR client implementation in Swift (port of https://github.com/skerkewitz/SignalR-ObjC).
 
 # Work in progress
 
