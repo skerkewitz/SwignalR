@@ -68,31 +68,24 @@ public class SRHttpBasedTransport: SRClientTransportInterface {
 
         let parameters = self.connectionParameters(connection, connectionData: connectionData)
 
-//                    //TODO: this is a little strange but SignalR Expects the parameters in the queryString and fails if in the body.
-//                    //So we let AFNetworking Generate our URL with proper encoding and then create the POST url which will encode the data in the body.
-//                    NSMutableURLRequest *url = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET" URLString:[connection.url stringByAppendingString:@"send"] parameters:parameters error:nil];
-//                    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"POST" URLString:[[url URL] absoluteString] parameters:@{ @"data" : data } error:nil];
-//                    [connection prepareRequest:request]; //TODO: prepareRequest
-//                    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-//                    [operation setResponseSerializer:[AFJSONResponseSerializer serializer]];
-//                    //operation.shouldUseCredentialStorage = self.shouldUseCredentialStorage;
-//                    //operation.credential = self.credential;
-//                    //operation.securityPolicy = self.securityPolicy;
-//                    SRLogTransportDebug(@"will send at url: %@", [[request URL] absoluteString]);
-//                    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-//                    SRLogTransportInfo(@"send was successful %@", responseObject);
-//                    [connection didReceiveData:responseObject];
-//                    if(block) {
-//                    block(responseObject, nil);
-//                    }
-//                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                    SRLogTransportError(@"send failed %@", error);
-//                    [connection didReceiveError:error];
-//                    if (block) {
-//                    block(nil, error);
-//                    }
-//                    }];
-//                    [operation start];
+        let dataSendRequest = Alamofire.request(connection.url + "send", method: .get, parameters: parameters)
+        let request = Alamofire.request(dataSendRequest.request!.url!.absoluteString, method: .post, parameters: ["data" : data])
+//        connection.prepare(request: &request.request!)
+
+        request.responseJSON(completionHandler: { response in
+
+            if let error = response.error as? NSError {
+                DDLogError("send failed \(error)")
+                connection.didReceive(error: error)
+                block?(nil, error);
+                return
+            }
+
+            let value = response.value!
+            DDLogInfo("send was successful \(value)")
+            connection.didReceiveData(value)
+            block?(value, nil);
+        })
     }
 
     public func completeAbort() {

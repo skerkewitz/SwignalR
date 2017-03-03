@@ -76,7 +76,8 @@ public class SRConnection: SRConnectionInterface {
     public func start() {
         // Pick the best transport supported by the client
         //self.start(SRAutoTransport alloc] init]];
-        self.start(SRWebSocketTransport())
+//        self.start(SRWebSocketTransport())
+        self.start(SRLongPollingTransport())
     }
 
     func start(_ transport: SRClientTransportInterface) {
