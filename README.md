@@ -1,6 +1,6 @@
 # SwignalR
 
-A [SignalR](https://www.asp.net/signalr) client implementation in Swift (port of https://github.com/skerkewitz/SignalR-ObjC).
+A [SignalR](https://www.asp.net/signalr) client implementation in Swift (port of [SignalR-ObjC](https://github.com/DyKnow/SignalR-ObjC)).
 
 For a good overview of SignalR have a lock here: [SignalR on the wire - an informal description of the signalr SignalR](https://blog.3d-logic.com/2015/03/29/signalr-on-the-wire-an-informal-description-of-the-signalr-protocol/)
 # Work in progress
