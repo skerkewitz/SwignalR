@@ -16,6 +16,7 @@ The development branch works, but only "WebSocket" and "Long Polling" transport 
 Not yet, sorry.
 
 # Alternatives
+- [SignalR-Client-Swift](https://github.com/moozzyk/SignalR-Client-Swift) Tiny clean SignalR client in Swift from a Member of the SignalR Dev-Team at Microsoft.
 - [SwiftR](https://github.com/adamhartford/SwiftR) SignalR client in JavaScript, running in a WebView, wrapped in Swift.
 - [SignalR-ObjC](https://github.com/DyKnow/SignalR-ObjC) SignalR client in Objective-C.
 
