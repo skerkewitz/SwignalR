@@ -4,7 +4,7 @@ A [SignalR](https://www.asp.net/signalr) client implementation in Swift (port of
 
 # Work in progress
 
-The development branch works. But only WebSocket transport is implemented at the moment. Also probably kinda buggy at the moment.
+The development branch works, but only "WebSocket" and "Long Polling" transport are implemented at the moment. Also probably kinda buggy.
 
 # Dependencies 
 - [Alamofire](https://github.com/Alamofire/Alamofire) 4.3 for HTTP stuff.
