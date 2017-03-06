@@ -22,8 +22,6 @@
 //
 
 import Foundation
-import CocoaLumberjack
-
 
 /**
  * An `SRHubConnection` object provides an abstraction over `SRConnection` and provides support for publishing and subscribing to custom events
@@ -60,7 +58,7 @@ public class SRHubConnection: SRConnection, SRHubConnectionInterface {
             fatalError(NSLocalizedString("Proxies cannot be added after the connection has been started.", comment: "NSInternalInconsistencyException"))
         }
 
-        DDLogDebug("will create proxy \(hubName)")
+        SRLogDebug("will create proxy \(hubName)")
 
         let name = hubName.lowercased()
         if let hubProxy = self.hubs[name] {

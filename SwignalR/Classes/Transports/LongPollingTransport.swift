@@ -22,9 +22,13 @@
 //
 
 import Foundation
-import CocoaLumberjack
 import Alamofire
 
+/**
+ * Long polling does not create a persistent connection, but instead polls the server with a request that stays open
+ * until the server responds, at which point the connection closes, and a new connection is requested immediately.
+ * This may introduce some latency while the connection resets.
+ */
 class SRLongPollingTransport: SRHttpBasedTransport {
 
     /**
@@ -50,27 +54,27 @@ class SRLongPollingTransport: SRHttpBasedTransport {
     }
 
     override func negotiate(_ connection: SRConnectionInterface, connectionData: String, completionHandler block: @escaping (SRNegotiationResponse?, NSError?) -> ()) {
-        DDLogDebug("longPolling will negotiate")
+        SRLogDebug("longPolling will negotiate")
         super.negotiate(connection, connectionData: connectionData, completionHandler: block)
     }
 
     override func start(_ connection: SRConnectionInterface, connectionData: String, completionHandler block: ((Any?, NSError?) -> ())?) {
-        DDLogDebug("longPolling will connect with connectionData \(connectionData)")
+        SRLogDebug("longPolling will connect with connectionData \(connectionData)")
         self.poll(connection, connectionData: connectionData, completionHandler: block)
     }
 
     override func send(_ connection: SRConnectionInterface, data: String, connectionData: String, completionHandler block: ((Any?, NSError?) -> ())?) {
-        DDLogDebug("longPolling will send data \(data)")
+        SRLogDebug("longPolling will send data \(data)")
         super.send(connection, data: data, connectionData: connectionData, completionHandler: block)
     }
 
     override func abort(_ connection: SRConnectionInterface, timeout: NSNumber, connectionData: String) {
-        DDLogDebug("longPolling will abort");
+        SRLogDebug("longPolling will abort");
         super.abort(connection, timeout: timeout, connectionData: connectionData)
     }
 
     override func lostConnection(_ connection: SRConnectionInterface) {
-        DDLogDebug("longPolling  lost connection");
+        SRLogDebug("longPolling  lost connection");
     }
 
 
@@ -101,9 +105,11 @@ class SRLongPollingTransport: SRHttpBasedTransport {
             parameters[key] = connection.queryString[key]!
         }
 
-        Alamofire.request(url, method: .get, parameters: parameters).responseString { response in
+        let dataRequest = Alamofire.request(url, method: .get, parameters: parameters)
+        SRLogDebug("longPolling will connect at url: \(dataRequest.request!.url!.absoluteString)")
+        dataRequest.responseString { response in
 
-            DDLogInfo("longPolling did receive: \(response.value!)")
+            SRLogDebug("longPolling did receive: \(response.value!)")
 
             var shouldReconnect = false
             var disconnectedReceived = false
@@ -117,7 +123,7 @@ class SRLongPollingTransport: SRHttpBasedTransport {
 
                 if !self.tryCompleteAbort() && !SRExceptionHelper.isRequestAborted(error) {
                     connection.didReceive(error: error)
-                    DDLogDebug("will poll again in \(self.errorDelay) seconds")
+                    SRLogDebug("will poll again in \(self.errorDelay) seconds")
                     canReconnect = true
 
                     DispatchQueue.main.asyncAfter(deadline: .now() + self.errorDelay) { [weak self] in
@@ -138,18 +144,18 @@ class SRLongPollingTransport: SRHttpBasedTransport {
             if self.isConnectionReconnecting(connection) {
                 // If the timeout for the reconnect hasn't fired as yet just fire the
                 // event here before any incoming messages are processed
-                DDLogWarn("reconnecting");
+                SRLogWarn("reconnecting");
                 canReconnect = self.connectionReconnect(connection)
             }
 
             if (shouldReconnect) {
                 // Transition into reconnecting state
-                DDLogDebug("longPolling did receive shouldReconnect command from server")
+                SRLogDebug("longPolling did receive shouldReconnect command from server")
                 SRConnection.ensureReconnecting(connection)
             }
 
             if (disconnectedReceived) {
-                DDLogDebug("longPolling did receive disconnect command from server")
+                SRLogDebug("longPolling did receive disconnect command from server")
                 connection.disconnect()
             }
 
@@ -158,7 +164,7 @@ class SRLongPollingTransport: SRHttpBasedTransport {
                 canReconnect = true
                 self.poll(connection, connectionData:connectionData, completionHandler:nil)
             } else {
-                DDLogWarn("longPolling has shutdown due to abort")
+                SRLogWarn("longPolling has shutdown due to abort")
             }
         }
 
@@ -169,7 +175,7 @@ class SRLongPollingTransport: SRHttpBasedTransport {
 //        connection.prepare(&request) //TODO: prepareRequest
 //        request.timeoutInterval = 240
 //
-//        DDLogDebug("longPolling will connect at url: \(request.url!.absoluteString)")
+
 //
 //        Alamofire.re
 //
@@ -187,9 +193,9 @@ class SRLongPollingTransport: SRHttpBasedTransport {
 
     func delayConnectionReconnect(_ connection: SRConnectionInterface, canReconnect: inout Bool) {
         if self.isConnectionReconnecting(connection) {
-            DDLogWarn("will reconnect in \(self.reconnectDelay)")
+            SRLogWarn("will reconnect in \(self.reconnectDelay)")
             DispatchQueue.main.asyncAfter(deadline: .now() + self.reconnectDelay) { [weak self] in
-                DDLogWarn("reconnecting")
+                SRLogWarn("reconnecting")
                 self?.connectionReconnect(connection)
                 //canReconnect = self?.connectionReconnect(connection) ?? false
             }

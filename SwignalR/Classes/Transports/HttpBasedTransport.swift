@@ -23,7 +23,6 @@
 
 import Foundation
 import Alamofire
-import CocoaLumberjack
 
 public class SRHttpBasedTransport: SRClientTransportInterface {
 
@@ -45,16 +44,16 @@ public class SRHttpBasedTransport: SRClientTransportInterface {
 
         let parameters = self.connectionParameters(connection, connectionData: connectionData)
 
-        DDLogDebug("will negotiate at url: \(connection.url)")
+        SRLogDebug("will negotiate at url: \(connection.url)")
         Alamofire.request(connection.url + "negotiate", method: .get, parameters: parameters).responseJSON() { (response: DataResponse<Any>) in
 
             if let error = response.error {
-                DDLogInfo("negotiate failed \(error)")
+                SRLogInfo("negotiate failed \(error)")
                 block(nil, error as! NSError);
                 return
             }
 
-            DDLogInfo("negotiate was successful \(response)")
+            SRLogInfo("negotiate was successful \(response)")
             block(SRNegotiationResponse(dictionary: response.result.value as! [String: Any]), nil)
         }
     }
@@ -82,7 +81,7 @@ public class SRHttpBasedTransport: SRClientTransportInterface {
             }
 
             let value = response.value!
-            DDLogInfo("send was successful \(value)")
+            SRLogInfo("send was successful \(value)")
             connection.didReceiveData(value)
             block?(value, nil);
         })
@@ -107,7 +106,7 @@ public class SRHttpBasedTransport: SRClientTransportInterface {
     public func abort(_ connection: SRConnectionInterface, timeout: NSNumber, connectionData: String) {
 
         if (timeout.intValue <= 0) {
-            DDLogWarn("stopping transport without informing server");
+            SRLogWarn("stopping transport without informing server");
             return;
         }
 
@@ -129,9 +128,9 @@ public class SRHttpBasedTransport: SRClientTransportInterface {
 //            //operation.shouldUseCredentialStorage = self.shouldUseCredentialStorage;
 //            //operation.credential = self.credential;
 //            //operation.securityPolicy = self.securityPolicy;
-//            DDLogDebug("Will abort at url: \(request.url!.absoluteString)")
+//            SRLogDebug("Will abort at url: \(request.url!.absoluteString)")
 //            operation.setCompletionBlockWithSuccess({ (operation: AFHTTPRequestOperation, responseObject: Any) in
-//                DDLogInfo("abort was successful \(responseObject)")
+//                SRLogInfo("abort was successful \(responseObject)")
 //            }, failure: { (operation: AFHTTPRequestOperation, error: Error) in
 //                DDLogError("Abort failed \(error)");
 //                self.completeAbort()

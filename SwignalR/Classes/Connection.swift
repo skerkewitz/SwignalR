@@ -22,7 +22,6 @@
 //
 
 import Foundation
-import CocoaLumberjack
 
 public class SRConnection: SRConnectionInterface {
 
@@ -92,7 +91,7 @@ public class SRConnection: SRConnectionInterface {
     }
 
     func negotiate(_ transport: SRClientTransportInterface) {
-        DDLogDebug("will negotiate");
+        SRLogDebug("will negotiate");
         self.connectionData = self.onSending()!
 
         self.transport.negotiate(self, connectionData: self.connectionData) { (negotiationResponse, error) in
@@ -120,14 +119,14 @@ public class SRConnection: SRConnectionInterface {
     }
 
     func startTransport() {
-        DDLogDebug("will start transport")
+        SRLogDebug("will start transport")
         self.transport.start(self, connectionData:self.connectionData) { (response, error) in
             if error == nil {
                 DDLogInfo("start transport was successful")
                 self.changeState(.connecting, toState:.connected)
 
                 if self.keepAliveData != nil && self.transport.supportsKeepAlive {
-                    DDLogDebug("connection starting keepalive monitor")
+                    SRLogDebug("connection starting keepalive monitor")
                     self.monitor?.start()
                 }
 
@@ -149,7 +148,7 @@ public class SRConnection: SRConnectionInterface {
         if (self.state == oldState) {
             self.state = newState;
 
-            DDLogDebug("connection state did change from \(oldState) to \(newState)")
+            SRLogDebug("connection state did change from \(oldState) to \(newState)")
             self.stateChanged?(self.state);
             return true
         }
@@ -186,11 +185,11 @@ public class SRConnection: SRConnectionInterface {
         // Do nothing if the connection is offline
         if (self.state != .disconnected) {
 
-            DDLogDebug("connection will stop monitoring keepalive")
+            SRLogDebug("connection will stop monitoring keepalive")
             self.monitor!.stop()
             self.monitor = nil
 
-            DDLogDebug("connection will abort transport")
+            SRLogDebug("connection will abort transport")
             self.transport.abort(self, timeout:timeout, connectionData:self.connectionData)
             self.disconnect()
 
@@ -216,7 +215,7 @@ public class SRConnection: SRConnectionInterface {
     }
 
     func didClose() {
-        DDLogDebug("connection did close")
+        SRLogDebug("connection did close")
         self.closed?()
 
         // SKerkewitz: Fix me if we really need the delegate
@@ -271,7 +270,7 @@ public class SRConnection: SRConnectionInterface {
             message = String(data: data!, encoding: .utf8)!
         }
 
-        DDLogDebug("connection transport will send \(message)")
+        SRLogDebug("connection transport will send \(message)")
         self.transport.send(self, data: message, connectionData: self.connectionData, completionHandler: block)
     }
 
@@ -279,35 +278,35 @@ public class SRConnection: SRConnectionInterface {
     /* --- Received Data --- */
 
     public func didReceiveData(_ message: Any) {
-        DDLogInfo("connection did receive data \(message)")
+        SRLogDebug("connection did receive data \(message)")
         self.received?(message)
     }
 
     public func didReceive(error: Error) {
-        DDLogError("Connection did receive error \(error)")
+        SRLogError("Connection did receive error \(error)")
         self.error?(error);
     }
 
     public func willReconnect() {
-        DDLogDebug("connection will reconnect")
+        SRLogDebug("connection will reconnect")
         // Only allow the client to attempt to reconnect for a self.disconnectTimout TimeSpan which is set by
         // the server during negotiation.
         // If the client tries to reconnect for longer the server will likely have deleted its ConnectionId
         // topic along with the contained disconnect message.
 
         self.disconnectTimeoutOperation = BlockOperation(block: {
-            DDLogWarn("connection failed to reconnect");
+            SRLogWarn("connection failed to reconnect");
             self.stopButDoNotCallServer()
         })
 
-        DDLogDebug("connection will disconnect if reconnect is not performed in \(self.disconnectTimeout)")
+        SRLogDebug("connection will disconnect if reconnect is not performed in \(self.disconnectTimeout)")
         self.disconnectTimeoutOperation!.perform(#selector(Operation.start), with:nil, afterDelay:self.disconnectTimeout.doubleValue)
 
         self.reconnecting?()
     }
 
     public func didReconnect() {
-        DDLogDebug("connection did reconnect")
+        SRLogDebug("connection did reconnect")
         NSObject.cancelPreviousPerformRequests(withTarget: self.disconnectTimeoutOperation, selector:#selector(Operation.start), object:nil)
         self.disconnectTimeoutOperation = nil;
 
@@ -316,7 +315,7 @@ public class SRConnection: SRConnectionInterface {
     }
 
     public func connectionDidSlow() {
-        DDLogDebug("connection did slow")
+        SRLogDebug("connection did slow")
         self.connectionSlow?()
     }
 

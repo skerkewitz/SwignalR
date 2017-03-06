@@ -22,7 +22,6 @@
 //
 
 import Foundation
-import CocoaLumberjack
 import Starscream
 import Alamofire
 
@@ -59,19 +58,19 @@ public class SRWebSocketTransport : SRHttpBasedTransport {
 
     
     public override func negotiate(_ connection: SRConnectionInterface, connectionData: String, completionHandler block: @escaping ((SRNegotiationResponse?, NSError?) -> ())) {
-        DDLogDebug("WebSocket will negotiate");
+        SRLogDebug("WebSocket will negotiate");
         super.negotiate(connection, connectionData: connectionData, completionHandler: block)
     }
 
 
     public override func start(_ connection: SRConnectionInterface, connectionData: String, completionHandler block: ((Any?, NSError?) -> ())?) {
-        DDLogDebug("WebSocket will connect with connectionData \(connectionData)")
+        SRLogDebug("WebSocket will connect with connectionData \(connectionData)")
         self.connectionInfo = SRWebSocketConnectionInfo(connection: connection, data: connectionData)
         self.performConnect(block: block)
     }
 
     public override func send(_ connection: SRConnectionInterface, data: String, connectionData: String, completionHandler block: ((Any?, NSError?) -> ())?) {
-        DDLogInfo("Will send data on WebSocket \(data)")
+        SRLogInfo("Will send data on WebSocket \(data)")
 
         if let socket = webSocket, socket.isConnected {
             socket.write(string: data) {
@@ -91,13 +90,13 @@ public class SRWebSocketTransport : SRHttpBasedTransport {
 
 
     public override func abort(_ connection: SRConnectionInterface, timeout: NSNumber, connectionData: String) {
-        DDLogWarn("Abort, will close WebSocket")
+        SRLogWarn("Abort, will close WebSocket")
         self.stopWebsocket()
         super.abort(connection, timeout: timeout, connectionData: connectionData)
     }
 
     public override func lostConnection(_ connection: SRConnectionInterface) {
-        DDLogWarn("Lost connection, closing WebSocket")
+        SRLogWarn("Lost connection, closing WebSocket")
         self.stopWebsocket()
 
         if self.tryCompleteAbort() {
@@ -143,7 +142,7 @@ public class SRWebSocketTransport : SRHttpBasedTransport {
 
         connection.prepare(request: &request) //TODO: prepareRequest
 
-        DDLogWarn("WebSocket will connect to url: \(request.url!.absoluteString)")
+        SRLogWarn("WebSocket will connect to url: \(request.url!.absoluteString)")
 
         self.startBlock = block
         if self.startBlock != nil {
@@ -160,7 +159,7 @@ public class SRWebSocketTransport : SRHttpBasedTransport {
                     ]
 
                     let timeout = NSError(domain: NSLocalizedString("com.SignalR.SignalR-ObjC." + String(describing: strongSelf), comment: ""), code: NSURLErrorTimedOut, userInfo: userInfo)
-                    DDLogError("WebSocket failed to receive initialized message before timeout")
+                    SRLogError("WebSocket failed to receive initialized message before timeout")
                     strongSelf.stopWebsocket()
 
                     let callback = strongSelf.startBlock
@@ -177,11 +176,11 @@ public class SRWebSocketTransport : SRHttpBasedTransport {
 
 
     func reconnect(_ connection: SRConnectionInterface) {
-        DDLogDebug("WebSocket will reconnect in \(self.reconnectDelay)")
+        SRLogDebug("WebSocket will reconnect in \(self.reconnectDelay)")
 
         DispatchQueue.main.asyncAfter(deadline: .now() + self.reconnectDelay) { [weak self] in
             if SRConnection.ensureReconnecting(connection) {
-                DDLogWarn("WebSocket reconnecting...")
+                SRLogWarn("WebSocket reconnecting...")
                 self?.performConnect(reconnecting: true, block: nil)
             }
         }
@@ -191,7 +190,7 @@ public class SRWebSocketTransport : SRHttpBasedTransport {
 extension SRWebSocketTransport: WebSocketDelegate {
 
     public func websocketDidConnect(socket: WebSocket) {
-        DDLogInfo("WebSocket did open")
+        SRLogInfo("WebSocket did open")
 
         guard let connection = self.connectionInfo?.connection else {
             fatalError("WebSocket did connect but transport has no connectionInfo instance.")
@@ -204,7 +203,7 @@ extension SRWebSocketTransport: WebSocketDelegate {
     }
 
     public func websocketDidReceiveMessage(socket: WebSocket, text: String) {
-        DDLogInfo("WebSocket did receive: \(text)")
+        SRLogInfo("WebSocket did receive: \(text)")
 
         var timedOut = false
         var disconnected = false
@@ -225,7 +224,7 @@ extension SRWebSocketTransport: WebSocketDelegate {
 
         /* Server requested disconnect. */
         if disconnected {
-            DDLogWarn("WebSocket did receive disconnect command from server, will close")
+            SRLogWarn("WebSocket did receive disconnect command from server, will close")
             connection.disconnect()
             self.stopWebsocket()
         }
@@ -242,10 +241,10 @@ extension SRWebSocketTransport: WebSocketDelegate {
             fatalError("WebSocket did receive error but transport has no connectionInfo instance.")
         }
 
-        DDLogError("WebSocket did fail with error \(connection.connectionId) \(error)")
+        SRLogError("WebSocket did fail with error \(connection.connectionId) \(error)")
 
         if self.startBlock != nil {
-            DDLogDebug("WebSocket did fail while connecting");
+            SRLogDebug("WebSocket did fail while connecting");
             NSObject.cancelPreviousPerformRequests(withTarget: self.connectTimeoutOperation, selector:#selector(BlockOperation.start), object:nil)
             self.connectTimeoutOperation = nil
 
@@ -253,20 +252,20 @@ extension SRWebSocketTransport: WebSocketDelegate {
             self.startBlock = nil
             callback?(nil, nil);
         } else if connection.state == .reconnecting {
-            DDLogWarn("transport already reconnecting")
+            SRLogWarn("transport already reconnecting")
         } else if self.startedAbort {
-            DDLogWarn("will reconnect from errors: \(error)")
+            SRLogWarn("will reconnect from errors: \(error)")
             self.reconnect(connection)
         }
     }
 
     public func websocketDidDisconnect(socket: WebSocket, error: NSError?) {
         if let error = error {
-            DDLogError("WebSocket did close with with error: \(error)")
+            SRLogError("WebSocket did close with with error: \(error)")
             self.webSocket(socket, didFailWithError: error)
             return
         } else {
-            DDLogWarn("WebSocket did close cleanly.")
+            SRLogWarn("WebSocket did close cleanly.")
         }
 
         if self.tryCompleteAbort() {

@@ -145,6 +145,7 @@
 		96ADFA591E68136B00CBB007 /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ADFA581E68136B00CBB007 /* Serializable.swift */; };
 		96ADFA5B1E6813B700CBB007 /* Deserializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ADFA5A1E6813B700CBB007 /* Deserializable.swift */; };
 		96ADFA5D1E69BB1900CBB007 /* LongPollingTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ADFA5C1E69BB1900CBB007 /* LongPollingTransport.swift */; };
+		96ADFA5F1E6D6B0E00CBB007 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ADFA5E1E6D6B0E00CBB007 /* Log.swift */; };
 		9AF235C16362BA00BFBF12147907E953 /* BeEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C0C8CDDAE62FA7A54918B0498FA30 /* BeEmpty.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		9B093A837EF9A33ACEAEAEC2E34C1F28 /* Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3B5ACA2DC68ABDD9305CEE44C23AD5 /* Example.swift */; };
 		9BEBD1791C233763A8DC13080BFB99C9 /* Stringers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9925EE96D969F1C1BEBB83CDC592EBE3 /* Stringers.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
@@ -404,6 +405,7 @@
 		96ADFA581E68136B00CBB007 /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		96ADFA5A1E6813B700CBB007 /* Deserializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deserializable.swift; sourceTree = "<group>"; };
 		96ADFA5C1E69BB1900CBB007 /* LongPollingTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LongPollingTransport.swift; sourceTree = "<group>"; };
+		96ADFA5E1E6D6B0E00CBB007 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Log.swift; path = Infrastructure/Log.swift; sourceTree = "<group>"; };
 		9713B9003E617410C5E0BA735DD9F9C1 /* SRExceptionHelper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SRExceptionHelper.m; sourceTree = "<group>"; };
 		97CC1D5518AC893138AA20EE15AAD96F /* SocketRocket.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SocketRocket.xcconfig; sourceTree = "<group>"; };
 		9925EE96D969F1C1BEBB83CDC592EBE3 /* Stringers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Stringers.swift; path = Sources/Nimble/Utils/Stringers.swift; sourceTree = "<group>"; };
@@ -616,17 +618,18 @@
 		1D08D8F69B09C0F544948FFDBDA04194 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				96ADFA5E1E6D6B0E00CBB007 /* Log.swift */,
+				9D5C8D0AFA387FBCC5B48516FB25D46E /* SRConnectionDelegate.h */,
+				EBCF536850981486A2CD85FD672DCC84 /* SRLog.h */,
+				96ADFA4E1E66BCA100CBB007 /* Connection.swift */,
 				96ADFA341E64725300CBB007 /* ConnectionInterface.swift */,
 				96ADFA2E1E6453C800CBB007 /* ConnectionState.swift */,
 				96ADFA381E656B8F00CBB007 /* HeartbeatMonitor.swift */,
-				3D87F742A3D98F714DDD550BF1E308B3 /* Hubs */,
-				178A5640A7C6D267C06B27418FBB1005 /* Infrastructure */,
 				96ADFA321E646DC800CBB007 /* KeepAliveData.swift */,
 				96ADFA421E65899E00CBB007 /* NegotiationResponse.swift */,
-				9D5C8D0AFA387FBCC5B48516FB25D46E /* SRConnectionDelegate.h */,
-				EBCF536850981486A2CD85FD672DCC84 /* SRLog.h */,
+				3D87F742A3D98F714DDD550BF1E308B3 /* Hubs */,
+				178A5640A7C6D267C06B27418FBB1005 /* Infrastructure */,
 				773C6C59E667083CEE2B681890EA724F /* Transports */,
-				96ADFA4E1E66BCA100CBB007 /* Connection.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1434,6 +1437,7 @@
 				2A4F1E87B74E08ED12BC6D3E98ED17D2 /* SREventSourceStreamReader.m in Sources */,
 				96ADFA4D1E66B97600CBB007 /* ClientTransportInterface.swift in Sources */,
 				28F3D722722FA407823B7B9DB8E2A37F /* SRExceptionHelper.m in Sources */,
+				96ADFA5F1E6D6B0E00CBB007 /* Log.swift in Sources */,
 				96ADFA3B1E657EE600CBB007 /* HubInvocation.swift in Sources */,
 				96ADFA391E656B8F00CBB007 /* HeartbeatMonitor.swift in Sources */,
 				96ADFA3D1E6581C100CBB007 /* Subscription.swift in Sources */,

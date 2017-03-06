@@ -21,7 +21,6 @@
 //
 
 import Foundation
-import CocoaLumberjack
 
 /**
  * An `SRHubProxy` object provides support for SignalR Hubs
@@ -65,7 +64,7 @@ class SRHubProxy: SRHubProxyInterface {
     public func on(_ eventName: String, handler block: @escaping ([Any]?) -> ()) {
 
         if let subscription = self.subscriptions[eventName] {
-            DDLogWarn("HubProxy already has a subscription for \(eventName), overwriting with new block")
+            SRLogWarn("HubProxy already has a subscription for \(eventName), overwriting with new block")
         }
 
         let subscription = SRSubscription(block: block)
@@ -112,7 +111,7 @@ class SRHubProxy: SRHubProxyInterface {
         if let eventObj = self.subscriptions[eventName] {
             eventObj.handler(args);
         } else {
-            DDLogError("Do not now a subscription for eventName: \(eventName)")
+            SRLogError("Do not now a subscription for eventName: \(eventName)")
         }
     }
 }

@@ -22,8 +22,6 @@
 //
 
 import Foundation
-import CocoaLumberjack
-
 
 @objc public class SRHeartbeatMonitor : NSObject {
 
@@ -63,14 +61,14 @@ import CocoaLumberjack
             if timeElapsed >= self.connection.keepAliveData!.timeout.doubleValue {
                 if !self.timedOut {
                     // Connection has been lost
-                    DDLogWarn("Connection Timed-out : Transport Lost Connection")
+                    SRLogWarn("Connection Timed-out : Transport Lost Connection")
                     self.timedOut = true;
                     self.connection.transport.lostConnection(self.connection)
                 }
             } else if timeElapsed >= self.connection.keepAliveData!.timeoutWarning.doubleValue {
                 if (!self.beenWarned) {
                     // Inform user and set HasBeenWarned to true
-                    DDLogWarn("Connection Timeout Warning : Notifying user")
+                    SRLogWarn("Connection Timeout Warning : Notifying user")
                     self.beenWarned = true
                     self.connection.connectionDidSlow()
                 }
