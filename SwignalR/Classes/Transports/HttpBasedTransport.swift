@@ -28,27 +28,31 @@ public class SRHttpBasedTransport: SRClientTransportInterface {
 
     public var startedAbort: Bool = false
 
-    public let name: String
-    public let supportsKeepAlive: Bool
+    let _name: String
+    let _supportsKeepAlive: Bool
+
+    public var name: String { get { return self._name }}
+    public var supportsKeepAlive: Bool { get { return self._supportsKeepAlive} }
 
     public convenience init() {
         self.init(name: "", supportsKeepAlive: false)
     }
 
     public init(name: String, supportsKeepAlive: Bool) {
-        self.name = name
-        self.supportsKeepAlive = supportsKeepAlive
+        self._name = name
+        self._supportsKeepAlive = supportsKeepAlive
     }
 
     public func negotiate(_ connection: SRConnectionInterface, connectionData: String, completionHandler block: @escaping (SRNegotiationResponse?, NSError?) -> ()) {
 
-        let parameters = self.connectionParameters(connection, connectionData: connectionData)
+        let parameters = connection.negotiateParameters(connectionData: connectionData, transportName: self.name)
 
-        SRLogDebug("will negotiate at url: \(connection.url)")
-        Alamofire.request(connection.url + "negotiate", method: .get, parameters: parameters).responseJSON() { (response: DataResponse<Any>) in
+        let url = connection.url + "negotiate"
+        SRLogDebug("will negotiate at url: \(url)")
+        Alamofire.request(url, method: .get, parameters: parameters).responseJSON() { (response: DataResponse<Any>) in
 
             if let error = response.error {
-                SRLogInfo("negotiate failed \(error)")
+                SRLogInfo("negotiate failed because of: \(error)")
                 block(nil, error as! NSError);
                 return
             }
@@ -65,7 +69,7 @@ public class SRHttpBasedTransport: SRClientTransportInterface {
 
     public func send(_ connection: SRConnectionInterface, data: String, connectionData: String, completionHandler block: ((Any?, NSError?) -> ())?) {
 
-        let parameters = self.connectionParameters(connection, connectionData: connectionData)
+        let parameters = connection.negotiateParameters(connectionData: connectionData, transportName: self.name)
 
         let dataSendRequest = Alamofire.request(connection.url + "send", method: .get, parameters: parameters)
         let request = Alamofire.request(dataSendRequest.request!.url!.absoluteString, method: .post, parameters: ["data" : data])
@@ -81,7 +85,7 @@ public class SRHttpBasedTransport: SRClientTransportInterface {
             }
 
             let value = response.value!
-            SRLogInfo("send was successful \(value)")
+            SRLogDebug("send was successful \(value)")
             connection.didReceiveData(value)
             block?(value, nil);
         })
@@ -103,9 +107,9 @@ public class SRHttpBasedTransport: SRClientTransportInterface {
     }
 
     //@parameter: timeout, the amount of time we
-    public func abort(_ connection: SRConnectionInterface, timeout: NSNumber, connectionData: String) {
+    public func abort(_ connection: SRConnectionInterface, timeout: TimeInterval, connectionData: String) {
 
-        if (timeout.intValue <= 0) {
+        if (timeout <= 0) {
             SRLogWarn("stopping transport without informing server");
             return;
         }
@@ -137,24 +141,6 @@ public class SRHttpBasedTransport: SRClientTransportInterface {
 //            })
 //            operation.start()
 //        }
-    }
-
-    func connectionParameters(_ connection: SRConnectionInterface, connectionData: String) -> [String: Any] {
-        var parameters = Dictionary<String, Any>()
-
-        parameters["clientProtocol"] = connection.clientProtocol
-        parameters["transport"] = self.name
-        parameters["connectionData"] = connectionData
-
-        if connection.connectionToken != nil {
-            parameters["connectionToken"] = connection.connectionToken
-        }
-
-        for (key, value) in connection.queryString {
-            parameters[key] = value
-        }
-
-        return parameters
     }
 }
 
@@ -203,5 +189,24 @@ extension SRConnectionInterface {
                 //                }
             }
         }
+    }
+
+    func negotiateParameters(connectionData: String, transportName name: String) -> [String: Any] {
+        var parameters = Dictionary<String, Any>()
+
+        parameters["transport"] = name
+        parameters["connectionData"] = connectionData
+        parameters["clientProtocol"] = self.clientProtocol
+
+        if self.connectionToken != nil {
+            parameters["connectionToken"] = self.connectionToken
+        }
+
+        /* Forward all key/values from the query string. */
+        for (key, value) in self.queryString {
+            parameters[key] = value
+        }
+
+        return parameters
     }
 }

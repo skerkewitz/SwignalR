@@ -26,7 +26,7 @@ import Foundation
 /**
  *  An `SRNegotiationResponse` object provides access to the negotiation response object received from the server
  */
-@objc public class SRNegotiationResponse : NSObject, SRDeserializable {
+public struct SRNegotiationResponse: SRDeserializable {
 
     public static let kConnectionId = "ConnectionId"
     public static let kConnectionToken = "ConnectionToken"
@@ -38,35 +38,34 @@ import Foundation
     public static let kTransportConnectTimeout = "TransportConnectTimeout"
 
     /** An `NSString` object representing the connectionId belonging to the current client */
-    public var connectionId: String = ""
+    public let connectionId: String
 
-    public var connectionToken: String = ""
+    public let connectionToken: String
 
     /** An `NSString` object representing the app relative server url the client should use for all
      * subsequent requests. */
-    public var url: String = ""
+    public let url: String
 
     /** An `NSString` object representing the protocol version the server is using. */
-    public var protocolVersion: String = ""
+    public let protocolVersion: String
 
-    public var disconnectTimeout: NSNumber = NSNumber(value: 0)
+    public let disconnectTimeout: TimeInterval
 
-    public var tryWebSockets: Bool = false
+    public let tryWebSockets: Bool
 
-    public var keepAliveTimeout: NSNumber = NSNumber(value: 0)
+    public let keepAliveTimeout: TimeInterval
 
-    public var transportConnectTimeout: NSNumber = NSNumber(value: 0)
+    public let transportConnectTimeout: TimeInterval
 
-    public required init(dictionary dict: [String: Any]) {
+    public init(dictionary dict: [String: Any]) {
         self.connectionId = dict[SRNegotiationResponse.kConnectionId] as! String
         self.connectionToken = dict[SRNegotiationResponse.kConnectionToken] as! String
         self.url = dict[SRNegotiationResponse.kUrl] as! String
         self.protocolVersion = dict[SRNegotiationResponse.kProtocolVersion] as! String
-        self.disconnectTimeout = dict[SRNegotiationResponse.kDisconnectTimeout] as! NSNumber
+        self.disconnectTimeout = dict[SRNegotiationResponse.kDisconnectTimeout] as! TimeInterval
         self.tryWebSockets = dict[SRNegotiationResponse.kTryWebSockets] as! Bool
-        self.keepAliveTimeout = dict[SRNegotiationResponse.kKeepAliveTimeout] as! NSNumber
-        self.transportConnectTimeout = dict[SRNegotiationResponse.kTransportConnectTimeout] as! NSNumber
-        super.init()
+        self.keepAliveTimeout = dict[SRNegotiationResponse.kKeepAliveTimeout] as! TimeInterval
+        self.transportConnectTimeout = dict[SRNegotiationResponse.kTransportConnectTimeout] as! TimeInterval
     }
 }
 

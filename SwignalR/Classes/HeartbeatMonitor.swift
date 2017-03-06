@@ -23,7 +23,7 @@
 
 import Foundation
 
-@objc public class SRHeartbeatMonitor : NSObject {
+class SRHeartbeatMonitor {
 
     public var beenWarned: Bool = false
     public var timedOut: Bool = false
@@ -33,14 +33,13 @@ import Foundation
 
     init(connection: SRConnectionInterface) {
         self.connection = connection
-        super.init()
     }
 
     public func start() {
         self.connection.updateLastKeepAlive()
         self.beenWarned = false
         self.timedOut = false
-        self.timer = Timer.scheduledTimer(timeInterval: self.connection.keepAliveData!.checkInterval.doubleValue,
+        self.timer = Timer.scheduledTimer(timeInterval: self.connection.keepAliveData!.checkInterval,
                 target:self, selector:#selector(heartbeat), userInfo:nil, repeats:true)
     }
 
@@ -51,31 +50,30 @@ import Foundation
     }
 
 
-    func heartbeat(_ timer: Timer) {
-        let timeElapsed = Date().timeIntervalSince(self.connection.keepAliveData!.lastKeepAlive!)
-        self.beat(timeElapsed)
-    }
+    @objc func heartbeat(_ timer: Timer) {
+        guard self.connection.state == .connected else {
+            SRLogDebug("Not connected, ignoring heartbeat...")
+            return
+        }
 
-    func beat(_ timeElapsed: TimeInterval) {
-        if (self.connection.state == .connected) {
-            if timeElapsed >= self.connection.keepAliveData!.timeout.doubleValue {
-                if !self.timedOut {
-                    // Connection has been lost
-                    SRLogWarn("Connection Timed-out : Transport Lost Connection")
-                    self.timedOut = true;
-                    self.connection.transport.lostConnection(self.connection)
-                }
-            } else if timeElapsed >= self.connection.keepAliveData!.timeoutWarning.doubleValue {
-                if (!self.beenWarned) {
-                    // Inform user and set HasBeenWarned to true
-                    SRLogWarn("Connection Timeout Warning : Notifying user")
-                    self.beenWarned = true
-                    self.connection.connectionDidSlow()
-                }
-            } else {
-               self.beenWarned = false;
-                self.timedOut = false;
+        let timeElapsed = Date().timeIntervalSince(self.connection.keepAliveData!.lastKeepAlive!)
+        if timeElapsed >= self.connection.keepAliveData!.timeout {
+            if !self.timedOut {
+                // Connection has been lost
+                SRLogWarn("Connection Timed-out : Transport Lost Connection")
+                self.timedOut = true;
+                self.connection.transport.lostConnection(self.connection)
             }
+        } else if timeElapsed >= self.connection.keepAliveData!.timeoutWarning {
+            if (!self.beenWarned) {
+                // Inform user and set HasBeenWarned to true
+                SRLogWarn("Connection Timeout Warning : Notifying user")
+                self.beenWarned = true
+                self.connection.connectionDidSlow()
+            }
+        } else {
+            self.beenWarned = false
+            self.timedOut = false
         }
     }
 }

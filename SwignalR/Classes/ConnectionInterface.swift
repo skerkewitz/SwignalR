@@ -49,12 +49,13 @@ public protocol SRConnectionInterface: class {
     var connectionSlow: ConnectionSlowBlock? { get set }
 
 
+    /** An arbitrary query string provided by the user. Will be appended to all requests. */
     var queryString: [String: String] { get }
     var state: ConnectionState { get }
 
     var clientProtocol: SRVersion { get }
 
-    var transportConnectTimeout: NSNumber { get set }
+    var transportConnectTimeout: TimeInterval { get set }
     var keepAliveData: SRKeepAliveData? { get set }
     var messageId: String! { get set }
     var groupsToken: String! { get set }

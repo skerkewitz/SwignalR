@@ -23,25 +23,23 @@
 
 import Foundation
 
-@objc public class SRKeepAliveData : NSObject {
+public struct SRKeepAliveData {
 
     public var lastKeepAlive: Date?
-    public var timeout: NSNumber
-    public var timeoutWarning: NSNumber
-    public var checkInterval: NSNumber
+    public let timeout: TimeInterval
+    public let timeoutWarning: TimeInterval
+    public let checkInterval: TimeInterval
 
-    public init (lastKeepAlive: Date?, timeout: NSNumber, timeoutWarning: NSNumber, checkInterval: NSNumber) {
+    public init (lastKeepAlive: Date?, timeout: TimeInterval, timeoutWarning: TimeInterval, checkInterval: TimeInterval) {
         self.timeout = timeout;
         self.lastKeepAlive = lastKeepAlive;
-        self.timeout = timeout;
         self.timeoutWarning = timeoutWarning;
         self.checkInterval = checkInterval;
-        super.init()
     }
 
-    public convenience init (timeout: NSNumber) {
-        let timeoutWarning = NSNumber(value: Int((timeout.doubleValue * (2.0 / 3.0))))
-        let checkInterval = NSNumber(value: (timeout.intValue - timeoutWarning.intValue) / 3)
+    public init (timeout: TimeInterval) {
+        let timeoutWarning = timeout * 2.0 / 3.0
+        let checkInterval = (timeout - timeoutWarning) / 3.0
         self.init(lastKeepAlive: nil, timeout: timeout, timeoutWarning: timeoutWarning, checkInterval: checkInterval)
     }
 

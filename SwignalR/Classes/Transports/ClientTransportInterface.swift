@@ -31,6 +31,9 @@ public protocol SRClientTransportInterface {
     var name: String { get }
     var supportsKeepAlive: Bool { get }
 
+    /**
+     * @param connectionData a array as json encoded String containing a list of hubs the client is subscribing to.
+     */
     func negotiate(_ connection: SRConnectionInterface, connectionData: String, completionHandler block: @escaping (SRNegotiationResponse?, NSError?) -> ())
 
     /**
@@ -57,7 +60,7 @@ public protocol SRClientTransportInterface {
      * @param connection the `SRConnectionInterface` owning the transport that should be stopped
      * @param timeout the allotted time for informing the server about the aborted connection. <= 0 means do not contact server
      */
-    func abort(_ connection: SRConnectionInterface, timeout: NSNumber, connectionData: String)
+    func abort(_ connection: SRConnectionInterface, timeout: TimeInterval, connectionData: String)
 
     func lostConnection(_ connection: SRConnectionInterface)
 }

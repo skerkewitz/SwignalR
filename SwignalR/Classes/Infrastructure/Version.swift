@@ -27,62 +27,22 @@ import Foundation
  * `SRVersion` represents the signalr protocol version number.
  */
 
-@objc public class SRVersion: NSObject {
-
-
-    /** The value of the build component of the version number for the current `SRVersion` object. */
-    public var build: Int = 0
+public struct SRVersion: CustomStringConvertible, Equatable {
 
     /** The value of the major component of the version number for the current `SRVersion` object. */
-    public var major: Int = 0
-
-    /** The value of the majorRevision component of the version number for the current `SRVersion` object. */
-    public var majorRevision: Int = 0
+    public let major: UInt
 
     /** The value of the minor component of the version number for the current `SRVersion` object. */
-    public var minor: Int = 0
-
-    /** The value of the minorRevision component of the version number for the current `SRVersion` object. */
-    public var minorRevision: Int = 0
+    public let minor: UInt
 
     /** The value of the revision component of the version number for the current `SRVersion` object. */
-    public var revision: Int = 0
+    public let revision: UInt
 
-    public override var description : String {
+    /** The value of the build component of the version number for the current `SRVersion` object. */
+    public let build: UInt
+
+    public var description : String {
         return "\(self.major),\(self.minor),\(self.build),\(self.revision)"
-    }
-
-    /**
-     * Initializes a new instance of the `SRVersion` class using the specified major and minor values.
-     *
-     * @param major an `NSInteger` representing the major component of a version
-     * @param minor an `NSInteger` representing the minior component of a version
-     */
-    public init(major: Int, minor: Int) {
-        super.init()
-        self.major = major;
-        self.minor = minor;
-
-        if self.major < 0 || self.minor < 0 {
-            fatalError(NSLocalizedString("Component cannot be less than 0", comment: "NSInvalidArgumentException"))
-        }
-    }
-
-    /**
-     * Initializes a new instance of the `SRVersion` class using the specified major, minor, and build values.
-     *
-     * @param major an `NSInteger` representing the major component of a version
-     * @param minor an `NSInteger` representing the minior component of a version
-     * @param build an `NSInteger` representing the build component of a version
-     */
-    convenience public init(major: Int, minor: Int, build: Int) {
-        self.init(major: major, minor: minor)
-
-        self.build = build;
-
-        if self.build < 0 {
-            fatalError(NSLocalizedString("Component cannot be less than 0", comment: "NSInvalidArgumentException"))
-        }
     }
 
     /**
@@ -93,13 +53,11 @@ import Foundation
      * @param build an `NSInteger` representing the build component of a version
      * @param revision an `NSInteger` representing the revision component of a version
      */
-    convenience public init(major: Int, minor: Int, build: Int, revision: Int) {
-        self.init(major: major, minor: minor, build: build)
-
+    public init(major: UInt, minor: UInt, build: UInt = 0, revision: UInt = 0) {
+        self.major = major
+        self.minor = minor
+        self.build = build
         self.revision = revision
-        if self.revision < 0 {
-            fatalError(NSLocalizedString("Component cannot be less than 0", comment: "NSInvalidArgumentException"))
-        }
     }
 
     /**
@@ -110,61 +68,49 @@ import Foundation
      *
      * @return a bool representing the sucess of the parse
      */
-    class func tryParse(input: String!, forVersion: inout SRVersion) -> Bool {
-        var success = true
-//
-//        if input == nil || input.isEmpty {
-//            return false
-//        }
-//
-//        NSArray *components = [input componentsSeparatedByString:@"."];
-//        if ([components count]
-//
-//< 2 || [components count] > 4) {
-//
-//return NO;
-//}
-//
-//SRVersion *temp = [[SRVersion alloc] init];
-//for (int i = 0; i < [components count]; i++) {
-//    switch (i) {
-//    case 0:
-//        temp.major = [components[0] integerValue];
-//        break;
-//    case 1:
-//        temp.minor = [components[1] integerValue];
-//        break;
-//    case 2:
-//        temp.build = [components[2] integerValue];
-//        break;
-//    case 3:
-//        temp.revision = [components[3] integerValue];
-//        break;
-//    default:
-//        break;
-//    }
-//}
-//*version = temp;
+    static func parse(from input: String) -> SRVersion? {
 
-        return success;
-    }
-
-    func isEqual(object: Any) -> Bool {
-
-        if let other = object as? SRVersion {
-
-            if self == other {
-                return true
-            }
-
-            return self.major == other.major
-                    && self.minor == other.minor
-                    && self.build == other.build
-                    && self.revision == other.revision
+        guard !input.isEmpty else {
+            return nil
         }
 
-        return false
+        let components = input.components(separatedBy: ".")
+        guard components.count >= 2 && components.count <= 4 else {
+            return nil
+        }
+
+        var major: UInt = 0
+        var minor : UInt = 0
+        var build : UInt = 0
+        var revision : UInt = 0
+
+        for (index, component) in components.enumerated() {
+            switch (index) {
+            case 0:
+                major = UInt(component) ?? 0
+            case 1:
+                minor = UInt(component) ?? 0
+            case 2:
+                build = UInt(component) ?? 0
+            case 3:
+                revision = UInt(component) ?? 0
+            default:
+                break
+            }
+        }
+
+        return SRVersion(major: major, minor: minor, build: build, revision: revision)
     }
 
+    public static func ==(lhs: SRVersion, rhs: SRVersion) -> Bool {
 
+//        if lhs === rhs {
+//            return true
+//        }
+
+        return lhs.major == rhs.major
+                && lhs.minor == rhs.minor
+                && lhs.build == rhs.build
+                && lhs.revision == rhs.revision
+    }
 }

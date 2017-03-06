@@ -111,7 +111,7 @@ class SRHubProxy: SRHubProxyInterface {
         if let eventObj = self.subscriptions[eventName] {
             eventObj.handler(args);
         } else {
-            SRLogError("Do not now a subscription for eventName: \(eventName)")
+            SRLogError("Do not now a subscription for eventName: \(eventName) with args \(args)")
         }
     }
 }

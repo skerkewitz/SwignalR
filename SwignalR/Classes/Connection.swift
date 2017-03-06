@@ -35,15 +35,15 @@ public class SRConnection: SRConnectionInterface {
     public var connectionSlow: SRConnectionInterface.ConnectionSlowBlock?
 
     var assemblyVersion: SRVersion? = nil
-    var defaultAbortTimeout: NSNumber = NSNumber(value: 30)
-    var disconnectTimeout: NSNumber = NSNumber(value: 0)
+    var defaultAbortTimeout: TimeInterval = 30
+    var disconnectTimeout: TimeInterval = 0
     var disconnectTimeoutOperation: BlockOperation?
 
     var connectionData: String = ""
     var monitor: SRHeartbeatMonitor? = nil
 
-    public let clientProtocol: SRVersion
-    public var transportConnectTimeout: NSNumber = NSNumber(value: 0)
+    public let clientProtocol = SRVersion(major:1, minor:3)
+    public var transportConnectTimeout: TimeInterval = 0
     public var keepAliveData: SRKeepAliveData?
     public var messageId: String!
     public var groupsToken: String!
@@ -66,17 +66,13 @@ public class SRConnection: SRConnectionInterface {
     //self.disconnectTimeoutOperation = DisposableAction.Empty;
     //self.connectingMessageBuffer = new ConnectingMessageBuffer(this, OnMessageReceived);
         self.state = .disconnected;
-
-        self.clientProtocol = SRVersion(major:1, minor:3)
     }
 
     /* --- Connection Management --- */
 
     public func start() {
-        // Pick the best transport supported by the client
-        //self.start(SRAutoTransport alloc] init]];
-//        self.start(SRWebSocketTransport())
-        self.start(SRLongPollingTransport())
+        /* Pick the best transport supported by the client. */
+        self.start(SRAutoTransport())
     }
 
     func start(_ transport: SRClientTransportInterface) {
@@ -95,26 +91,32 @@ public class SRConnection: SRConnectionInterface {
         self.connectionData = self.onSending()!
 
         self.transport.negotiate(self, connectionData: self.connectionData) { (negotiationResponse, error) in
-            if error == nil {
-                DDLogInfo("negotiation was successful \(negotiationResponse!)")
-                self.verifyProtocolVersion(negotiationResponse!.protocolVersion)
 
-                self.connectionId = negotiationResponse!.connectionId;
-                self.connectionToken = negotiationResponse!.connectionToken;
-                self.disconnectTimeout = negotiationResponse!.disconnectTimeout;
-                self.transportConnectTimeout = NSNumber(value: (self.transportConnectTimeout.intValue + negotiationResponse!.transportConnectTimeout.intValue))
-
-                // If we have a keep alive
-                if (negotiationResponse!.keepAliveTimeout.intValue > 0) {
-                    self.keepAliveData = SRKeepAliveData(timeout: negotiationResponse!.keepAliveTimeout)
-                }
-
-                self.startTransport()
-            } else {
-                DDLogError("negotiation failed \(error!)");
-                self.didReceive(error: error!)
+            if let error = error {
+                SRLogInfo("negotiation failed \(error)");
+                self.didReceive(error: error)
                 self.didClose()
+                return
             }
+
+            guard let negotiationResponse = negotiationResponse else {
+                fatalError("No negotiation response.")
+            }
+
+            SRLogInfo("negotiation was successful \(negotiationResponse)")
+            self.verifyProtocolVersion(negotiationResponse.protocolVersion)
+
+            self.connectionId = negotiationResponse.connectionId
+            self.connectionToken = negotiationResponse.connectionToken
+            self.disconnectTimeout = negotiationResponse.disconnectTimeout
+            self.transportConnectTimeout = self.transportConnectTimeout + negotiationResponse.transportConnectTimeout
+
+            // If we have a keep alive
+            if negotiationResponse.keepAliveTimeout > 0 {
+                self.keepAliveData = SRKeepAliveData(timeout: negotiationResponse.keepAliveTimeout)
+            }
+
+            self.startTransport()
         }
     }
 
@@ -122,7 +124,7 @@ public class SRConnection: SRConnectionInterface {
         SRLogDebug("will start transport")
         self.transport.start(self, connectionData:self.connectionData) { (response, error) in
             if error == nil {
-                DDLogInfo("start transport was successful")
+                SRLogInfo("Start transport was successful, using \(self.transport.name)")
                 self.changeState(.connecting, toState:.connected)
 
                 if self.keepAliveData != nil && self.transport.supportsKeepAlive {
@@ -133,7 +135,7 @@ public class SRConnection: SRConnectionInterface {
                 self.started?()
 
             } else {
-                DDLogError("start transport failed \(error!)")
+                SRLogError("start transport failed \(error!)")
                 self.didReceive(error: error!)
                 self.didClose()
             }
@@ -158,22 +160,23 @@ public class SRConnection: SRConnectionInterface {
     }
 
     func verifyProtocolVersion(_ versionString: String) {
-    // XXX SKerkewitz FIXME
-    //    SRVersion *version = nil;
-    //    if((versionString == nil || [versionString isEqualToString:@""] == YES) ||
-    //       ![SRVersion tryParse:versionString forVersion:&version] ||
-    //        !([version isEqual:self.protocol])) {
-    //        [NSException raise:NSInternalInconsistencyException format:NSLocalizedString(@"Incompatible Protocol Version",@"NSInternalInconsistencyException")];
-    //    }
+
+        guard let version = SRVersion.parse(from: versionString) else {
+            fatalError("Could not parse version")
+        }
+
+        if version != self.clientProtocol {
+            SRLogError("Invalid version \(version), expected \(self.clientProtocol)")
+        }
     }
 
     func stopAndCallServer() {
-        self.stop(self.defaultAbortTimeout)
+        self.stop(timeout: self.defaultAbortTimeout)
     }
 
     func stopButDoNotCallServer() {
         //immediately give up telling the server
-        self.stop(NSNumber(value: -1))
+        self.stop(timeout: -1)
     }
 
     public func stop() {
@@ -181,7 +184,7 @@ public class SRConnection: SRConnectionInterface {
     }
 
     /** timeout <= 0 does not call server (immediate timeout). */
-    public func stop(_ timeout: NSNumber)  {
+    public func stop(timeout: TimeInterval)  {
         // Do nothing if the connection is offline
         if (self.state != .disconnected) {
 
@@ -300,7 +303,7 @@ public class SRConnection: SRConnectionInterface {
         })
 
         SRLogDebug("connection will disconnect if reconnect is not performed in \(self.disconnectTimeout)")
-        self.disconnectTimeoutOperation!.perform(#selector(Operation.start), with:nil, afterDelay:self.disconnectTimeout.doubleValue)
+        self.disconnectTimeoutOperation!.perform(#selector(Operation.start), with:nil, afterDelay:self.disconnectTimeout)
 
         self.reconnecting?()
     }

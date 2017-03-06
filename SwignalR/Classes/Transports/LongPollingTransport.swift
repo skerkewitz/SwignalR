@@ -68,7 +68,7 @@ class SRLongPollingTransport: SRHttpBasedTransport {
         super.send(connection, data: data, connectionData: connectionData, completionHandler: block)
     }
 
-    override func abort(_ connection: SRConnectionInterface, timeout: NSNumber, connectionData: String) {
+    override func abort(_ connection: SRConnectionInterface, timeout: TimeInterval, connectionData: String) {
         SRLogDebug("longPolling will abort");
         super.abort(connection, timeout: timeout, connectionData: connectionData)
     }
@@ -167,29 +167,7 @@ class SRLongPollingTransport: SRHttpBasedTransport {
                 SRLogWarn("longPolling has shutdown due to abort")
             }
         }
-
-//
-//
-//        }
-//        var request = dataRequest.request
-//        connection.prepare(&request) //TODO: prepareRequest
-//        request.timeoutInterval = 240
-//
-
-//
-//        Alamofire.re
-//
-//AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-//[operation setResponseSerializer:[AFJSONResponseSerializer serializer]];
-////operation.shouldUseCredentialStorage = self.shouldUseCredentialStorage;
-////operation.credential = self.credential;
-////operation.securityPolicy = self.securityPolicy;
-//[operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-//    __strong __typeof(& * weakSelf)strongSelf = weakSelf;
-//    __strong __typeof(& * weakConnection)strongConnection = weakConnection;
-
-
-}
+    }
 
     func delayConnectionReconnect(_ connection: SRConnectionInterface, canReconnect: inout Bool) {
         if self.isConnectionReconnecting(connection) {

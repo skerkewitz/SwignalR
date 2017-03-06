@@ -70,7 +70,7 @@ public class SRWebSocketTransport : SRHttpBasedTransport {
     }
 
     public override func send(_ connection: SRConnectionInterface, data: String, connectionData: String, completionHandler block: ((Any?, NSError?) -> ())?) {
-        SRLogInfo("Will send data on WebSocket \(data)")
+        SRLogDebug("Will send data on WebSocket \(data)")
 
         if let socket = webSocket, socket.isConnected {
             socket.write(string: data) {
@@ -89,7 +89,7 @@ public class SRWebSocketTransport : SRHttpBasedTransport {
     }
 
 
-    public override func abort(_ connection: SRConnectionInterface, timeout: NSNumber, connectionData: String) {
+    public override func abort(_ connection: SRConnectionInterface, timeout: TimeInterval, connectionData: String) {
         SRLogWarn("Abort, will close WebSocket")
         self.stopWebsocket()
         super.abort(connection, timeout: timeout, connectionData: connectionData)
@@ -142,7 +142,7 @@ public class SRWebSocketTransport : SRHttpBasedTransport {
 
         connection.prepare(request: &request) //TODO: prepareRequest
 
-        SRLogWarn("WebSocket will connect to url: \(request.url!.absoluteString)")
+        SRLogInfo("WebSocket will connect to url: \(request.url!.absoluteString)")
 
         self.startBlock = block
         if self.startBlock != nil {
@@ -167,7 +167,7 @@ public class SRWebSocketTransport : SRHttpBasedTransport {
                     callback?(nil, timeout)
                 }
             })
-            self.connectTimeoutOperation!.perform(#selector(BlockOperation.start), with: nil, afterDelay: connection.transportConnectTimeout.doubleValue)
+            self.connectTimeoutOperation!.perform(#selector(BlockOperation.start), with: nil, afterDelay: connection.transportConnectTimeout)
         }
         self.webSocket = WebSocket(url: request.url!)
         self.webSocket!.delegate = self
@@ -190,7 +190,7 @@ public class SRWebSocketTransport : SRHttpBasedTransport {
 extension SRWebSocketTransport: WebSocketDelegate {
 
     public func websocketDidConnect(socket: WebSocket) {
-        SRLogInfo("WebSocket did open")
+        SRLogDebug("WebSocket did open")
 
         guard let connection = self.connectionInfo?.connection else {
             fatalError("WebSocket did connect but transport has no connectionInfo instance.")
@@ -203,7 +203,7 @@ extension SRWebSocketTransport: WebSocketDelegate {
     }
 
     public func websocketDidReceiveMessage(socket: WebSocket, text: String) {
-        SRLogInfo("WebSocket did receive: \(text)")
+        SRLogDebug("WebSocket did receive: \(text)")
 
         var timedOut = false
         var disconnected = false
@@ -244,7 +244,7 @@ extension SRWebSocketTransport: WebSocketDelegate {
         SRLogError("WebSocket did fail with error \(connection.connectionId) \(error)")
 
         if self.startBlock != nil {
-            SRLogDebug("WebSocket did fail while connecting");
+            SRLogError("WebSocket did fail while connecting");
             NSObject.cancelPreviousPerformRequests(withTarget: self.connectTimeoutOperation, selector:#selector(BlockOperation.start), object:nil)
             self.connectTimeoutOperation = nil
 

@@ -146,6 +146,7 @@
 		96ADFA5B1E6813B700CBB007 /* Deserializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ADFA5A1E6813B700CBB007 /* Deserializable.swift */; };
 		96ADFA5D1E69BB1900CBB007 /* LongPollingTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ADFA5C1E69BB1900CBB007 /* LongPollingTransport.swift */; };
 		96ADFA5F1E6D6B0E00CBB007 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ADFA5E1E6D6B0E00CBB007 /* Log.swift */; };
+		96ADFA611E6DAEF200CBB007 /* AutoTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ADFA601E6DAEF200CBB007 /* AutoTransport.swift */; };
 		9AF235C16362BA00BFBF12147907E953 /* BeEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C0C8CDDAE62FA7A54918B0498FA30 /* BeEmpty.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		9B093A837EF9A33ACEAEAEC2E34C1F28 /* Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3B5ACA2DC68ABDD9305CEE44C23AD5 /* Example.swift */; };
 		9BEBD1791C233763A8DC13080BFB99C9 /* Stringers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9925EE96D969F1C1BEBB83CDC592EBE3 /* Stringers.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
@@ -406,6 +407,7 @@
 		96ADFA5A1E6813B700CBB007 /* Deserializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deserializable.swift; sourceTree = "<group>"; };
 		96ADFA5C1E69BB1900CBB007 /* LongPollingTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LongPollingTransport.swift; sourceTree = "<group>"; };
 		96ADFA5E1E6D6B0E00CBB007 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Log.swift; path = Infrastructure/Log.swift; sourceTree = "<group>"; };
+		96ADFA601E6DAEF200CBB007 /* AutoTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoTransport.swift; sourceTree = "<group>"; };
 		9713B9003E617410C5E0BA735DD9F9C1 /* SRExceptionHelper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SRExceptionHelper.m; sourceTree = "<group>"; };
 		97CC1D5518AC893138AA20EE15AAD96F /* SocketRocket.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SocketRocket.xcconfig; sourceTree = "<group>"; };
 		9925EE96D969F1C1BEBB83CDC592EBE3 /* Stringers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Stringers.swift; path = Sources/Nimble/Utils/Stringers.swift; sourceTree = "<group>"; };
@@ -796,6 +798,7 @@
 				96ADFA4A1E65D0F600CBB007 /* HttpBasedTransport.swift */,
 				96ADFA4C1E66B97600CBB007 /* ClientTransportInterface.swift */,
 				96ADFA5C1E69BB1900CBB007 /* LongPollingTransport.swift */,
+				96ADFA601E6DAEF200CBB007 /* AutoTransport.swift */,
 			);
 			path = Transports;
 			sourceTree = "<group>";
@@ -1440,6 +1443,7 @@
 				96ADFA5F1E6D6B0E00CBB007 /* Log.swift in Sources */,
 				96ADFA3B1E657EE600CBB007 /* HubInvocation.swift in Sources */,
 				96ADFA391E656B8F00CBB007 /* HeartbeatMonitor.swift in Sources */,
+				96ADFA611E6DAEF200CBB007 /* AutoTransport.swift in Sources */,
 				96ADFA3D1E6581C100CBB007 /* Subscription.swift in Sources */,
 				96ADFA3F1E6582B800CBB007 /* HubResult.swift in Sources */,
 				96ADFA371E64774300CBB007 /* Version.swift in Sources */,
