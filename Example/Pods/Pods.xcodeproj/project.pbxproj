@@ -40,7 +40,6 @@
 		25638920DC7F6AEEEE8FA95A13BF2252 /* QCKDSL.m in Sources */ = {isa = PBXBuildFile; fileRef = 3774E34630A50A996B0C57159E3C32CA /* QCKDSL.m */; };
 		25E58152597C474DC6A3F6C5CA90CADE /* UIWebView+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D32F410A6B22F81919395154E6A2C4 /* UIWebView+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27B262F95D3CF9E3C74541A41929691C /* NMBStringify.h in Headers */ = {isa = PBXBuildFile; fileRef = D1FB56262C7771B24564F4D7CBB1F622 /* NMBStringify.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		28F3D722722FA407823B7B9DB8E2A37F /* SRExceptionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9713B9003E617410C5E0BA735DD9F9C1 /* SRExceptionHelper.m */; };
 		2A4F1E87B74E08ED12BC6D3E98ED17D2 /* SREventSourceStreamReader.m in Sources */ = {isa = PBXBuildFile; fileRef = CBF4CA0B5E800E6F66EDEEF744620810 /* SREventSourceStreamReader.m */; };
 		2ED997B259CF87164EB742D3C6E3C670 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B42978D2C426E992E4958B1B3096E81 /* AFURLResponseSerialization.m */; };
 		300F34DBD1EAD72F220D42721638201C /* UIImageView+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D206663F4F16E87F0B809BFED9D5F3F /* UIImageView+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -72,9 +71,7 @@
 		55D16AE8C4135787C23886FBAC4A72F5 /* SocketRocket-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 60EB12B38CB827A359B747EAE7CF15FC /* SocketRocket-dummy.m */; };
 		599669823A2EED2928C77F301F6B0515 /* BeNil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE1396DBCB7B8FF686A7FB4DEBD9549 /* BeNil.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		59B5809E8E97F19BCDF9B18278740A6B /* UIActivityIndicatorView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = AB32D796B608EE1A758D8CE26E839FB5 /* UIActivityIndicatorView+AFNetworking.m */; };
-		5D3126D9DB1F0B488CAA782B539B7453 /* SRLog.h in Headers */ = {isa = PBXBuildFile; fileRef = EBCF536850981486A2CD85FD672DCC84 /* SRLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5E2FD51B3967A1FAAD5B0ECC154979C3 /* XCTestSuite+QuickTestSuiteBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 888C7719DDEF337F756394CF76D4E49F /* XCTestSuite+QuickTestSuiteBuilder.m */; };
-		5EE1CCEA903BDBAEB861FF62879C93C9 /* SRExceptionHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EFE00C925B1BF34BDE4FBDBCFF20BF3 /* SRExceptionHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5F4ADB57CEB7A57AC58F1E6AAD42A72A /* UIAlertView+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = DC1AF70FA681CCEA35AFDA72FD401839 /* UIAlertView+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5F7B3A10F147CA75B91A7A3A91DB3F06 /* Quick-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 531308FE0D67880B31A172B3A7FF7057 /* Quick-dummy.m */; };
 		62744EF299751FB49B5FCD81D8C8FFF7 /* SatisfyAnyOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCCF6E877D0BF7D977A94B0FDE1CE96 /* SatisfyAnyOf.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
@@ -88,7 +85,6 @@
 		737E19F3254F5929263982C29237C0BA /* CwlBadInstructionException.swift in Sources */ = {isa = PBXBuildFile; fileRef = E660E165AE5B57F25B0870BD16412C37 /* CwlBadInstructionException.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		746A7549981ED63CB70FF730EF60999D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FA615C1952E52858C4EA734710CBE93 /* MobileCoreServices.framework */; };
 		74FD712F3B503891B6BD9E5CD287E481 /* AssertionDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB268409A0EB70FF53D77B38ADEBBA3C /* AssertionDispatcher.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
-		755623942A8E664F1506F26E002B7E1B /* SRConnectionDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D5C8D0AFA387FBCC5B48516FB25D46E /* SRConnectionDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		76036D32625A56D480D84AA46961EF91 /* Nimble-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A2EF8418ECCF11C967B8ACFDCDDB31E /* Nimble-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		78705591C6850CE867D0356F476E0B6D /* AFNetworkReachabilityManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A2ABEAA04C0B649D5C760887DAD2F20B /* AFNetworkReachabilityManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		78F3DE174B4F8D368EF8EEFD7EE62087 /* BeVoid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA64749E60694BEDE36BF78BB4AE939 /* BeVoid.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
@@ -349,7 +345,6 @@
 		6B144CFEE15D619FFD714142F50399FE /* AFURLSessionManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFURLSessionManager.h; path = AFNetworking/AFURLSessionManager.h; sourceTree = "<group>"; };
 		6BFD5210B7A2B7C097E0C6DB7E3121F0 /* Nimble.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Nimble.h; path = Sources/Nimble/Nimble.h; sourceTree = "<group>"; };
 		6DB1740DBD13A7128FD428094877AE73 /* AFSecurityPolicy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFSecurityPolicy.m; path = AFNetworking/AFSecurityPolicy.m; sourceTree = "<group>"; };
-		6EFE00C925B1BF34BDE4FBDBCFF20BF3 /* SRExceptionHelper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SRExceptionHelper.h; sourceTree = "<group>"; };
 		71654956EC64A691514B862CD7C2017B /* AFNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AFNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		72A28FECD0F916EC4C24979851FFB949 /* NMBExceptionCapture.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NMBExceptionCapture.h; path = Sources/NimbleObjectiveC/NMBExceptionCapture.h; sourceTree = "<group>"; };
 		72ACACC792888EDABA35C34F071A1679 /* SRWebSocket.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SRWebSocket.m; path = SocketRocket/SRWebSocket.m; sourceTree = "<group>"; };
@@ -408,14 +403,12 @@
 		96ADFA5C1E69BB1900CBB007 /* LongPollingTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LongPollingTransport.swift; sourceTree = "<group>"; };
 		96ADFA5E1E6D6B0E00CBB007 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Log.swift; path = Infrastructure/Log.swift; sourceTree = "<group>"; };
 		96ADFA601E6DAEF200CBB007 /* AutoTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoTransport.swift; sourceTree = "<group>"; };
-		9713B9003E617410C5E0BA735DD9F9C1 /* SRExceptionHelper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SRExceptionHelper.m; sourceTree = "<group>"; };
 		97CC1D5518AC893138AA20EE15AAD96F /* SocketRocket.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SocketRocket.xcconfig; sourceTree = "<group>"; };
 		9925EE96D969F1C1BEBB83CDC592EBE3 /* Stringers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Stringers.swift; path = Sources/Nimble/Utils/Stringers.swift; sourceTree = "<group>"; };
 		9B42978D2C426E992E4958B1B3096E81 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLResponseSerialization.m; path = AFNetworking/AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		9C0EEE23487989D9FD6F40F86086E29B /* SREventSourceResponseSerializer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SREventSourceResponseSerializer.h; sourceTree = "<group>"; };
 		9C65483D275CDB3DFE62BAD3B02B3DFD /* Callsite.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Callsite.swift; path = Sources/Quick/Callsite.swift; sourceTree = "<group>"; };
 		9CE7D73D26540B87F6FD6C1D07F0C99A /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFURLRequestSerialization.h; path = AFNetworking/AFURLRequestSerialization.h; sourceTree = "<group>"; };
-		9D5C8D0AFA387FBCC5B48516FB25D46E /* SRConnectionDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SRConnectionDelegate.h; sourceTree = "<group>"; };
 		9F1B372EAA064DF8BDBDF4C499401717 /* Functional.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Functional.swift; path = Sources/Nimble/Utils/Functional.swift; sourceTree = "<group>"; };
 		9FDBBA14AF21D0967DA55A2297EDDC55 /* Match.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Match.swift; path = Sources/Nimble/Matchers/Match.swift; sourceTree = "<group>"; };
 		A2ABEAA04C0B649D5C760887DAD2F20B /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworkReachabilityManager.h; path = AFNetworking/AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
@@ -477,7 +470,6 @@
 		EA2F8CCDF8AB0200FE9E0E82644AF87A /* Contain.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Contain.swift; path = Sources/Nimble/Matchers/Contain.swift; sourceTree = "<group>"; };
 		EB08FB2970D6C6B9AB82EA03ABE64A82 /* UIButton+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIButton+AFNetworking.h"; path = "UIKit+AFNetworking/UIButton+AFNetworking.h"; sourceTree = "<group>"; };
 		EB1621752C891356801E5561F9D5CD7F /* SourceLocation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SourceLocation.swift; path = Sources/Nimble/Utils/SourceLocation.swift; sourceTree = "<group>"; };
-		EBCF536850981486A2CD85FD672DCC84 /* SRLog.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SRLog.h; sourceTree = "<group>"; };
 		EC11C7E727802139616662FAEA0BB979 /* World+DSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "World+DSL.swift"; path = "Sources/Quick/DSL/World+DSL.swift"; sourceTree = "<group>"; };
 		ED16B403BAD688BF5B245417AE6DB565 /* AllPass.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AllPass.swift; path = Sources/Nimble/Matchers/AllPass.swift; sourceTree = "<group>"; };
 		ED5354F516CCA9A5558E5C7EF38789CF /* SocketRocket-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SocketRocket-umbrella.h"; sourceTree = "<group>"; };
@@ -608,8 +600,6 @@
 		178A5640A7C6D267C06B27418FBB1005 /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
-				6EFE00C925B1BF34BDE4FBDBCFF20BF3 /* SRExceptionHelper.h */,
-				9713B9003E617410C5E0BA735DD9F9C1 /* SRExceptionHelper.m */,
 				96ADFA361E64774300CBB007 /* Version.swift */,
 				96ADFA581E68136B00CBB007 /* Serializable.swift */,
 				96ADFA5A1E6813B700CBB007 /* Deserializable.swift */,
@@ -621,8 +611,6 @@
 			isa = PBXGroup;
 			children = (
 				96ADFA5E1E6D6B0E00CBB007 /* Log.swift */,
-				9D5C8D0AFA387FBCC5B48516FB25D46E /* SRConnectionDelegate.h */,
-				EBCF536850981486A2CD85FD672DCC84 /* SRLog.h */,
 				96ADFA4E1E66BCA100CBB007 /* Connection.swift */,
 				96ADFA341E64725300CBB007 /* ConnectionInterface.swift */,
 				96ADFA2E1E6453C800CBB007 /* ConnectionState.swift */,
@@ -1129,12 +1117,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				82E5E3A4A7A73351A822EFC0ADC428FE /* SRChunkBuffer.h in Headers */,
-				755623942A8E664F1506F26E002B7E1B /* SRConnectionDelegate.h in Headers */,
 				48F493C00399B2C40B70476E986C0043 /* SREventSourceRequestSerializer.h in Headers */,
 				3A3B08B286BABEFF10E1C5B910A70A2E /* SREventSourceResponseSerializer.h in Headers */,
 				BB592857ED6E4C97819A9CF09FE801F7 /* SREventSourceStreamReader.h in Headers */,
-				5EE1CCEA903BDBAEB861FF62879C93C9 /* SRExceptionHelper.h in Headers */,
-				5D3126D9DB1F0B488CAA782B539B7453 /* SRLog.h in Headers */,
 				9D472CD2B99BEA99183925C9CD9AD042 /* SRServerSentEvent.h in Headers */,
 				060E8B81FB4E665B20D494C1A5ED0D22 /* SwignalR-umbrella.h in Headers */,
 			);
@@ -1439,7 +1424,6 @@
 				7E2FD5D6B1979D2D6712C3578088CB20 /* SREventSourceResponseSerializer.m in Sources */,
 				2A4F1E87B74E08ED12BC6D3E98ED17D2 /* SREventSourceStreamReader.m in Sources */,
 				96ADFA4D1E66B97600CBB007 /* ClientTransportInterface.swift in Sources */,
-				28F3D722722FA407823B7B9DB8E2A37F /* SRExceptionHelper.m in Sources */,
 				96ADFA5F1E6D6B0E00CBB007 /* Log.swift in Sources */,
 				96ADFA3B1E657EE600CBB007 /* HubInvocation.swift in Sources */,
 				96ADFA391E656B8F00CBB007 /* HeartbeatMonitor.swift in Sources */,

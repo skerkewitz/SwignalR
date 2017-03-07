@@ -111,7 +111,12 @@ class SRHubProxy: SRHubProxyInterface {
         if let eventObj = self.subscriptions[eventName] {
             eventObj.handler(args);
         } else {
-            SRLogError("Do not now a subscription for eventName: \(eventName) with args \(args)")
+            /* Only log fully when running on debug. TODO: Add ability to silence such messages. */
+            if logLevel == .info {
+                SRLogWarn("Do not now a subscription for eventName: \(eventName)")
+            } else if logLevel == .debug || logLevel == .verbose {
+                SRLogError("Do not now a subscription for eventName: \(eventName) with args \(args)")
+            }
         }
     }
 }

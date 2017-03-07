@@ -78,7 +78,7 @@ public class SRHttpBasedTransport: SRClientTransportInterface {
         request.responseJSON(completionHandler: { response in
 
             if let error = response.error as? NSError {
-                DDLogError("send failed \(error)")
+                SRLogError("send failed \(error)")
                 connection.didReceive(error: error)
                 block?(nil, error);
                 return

@@ -115,7 +115,7 @@ class SRLongPollingTransport: SRHttpBasedTransport {
             var disconnectedReceived = false
 
             if let error = response.error as? NSError {
-                DDLogError("longPolling did fail with error \(error)")
+                SRLogError("longPolling did fail with error \(error)")
                 canReconnect = false
 
                 // Transition into reconnecting state
@@ -193,5 +193,13 @@ class SRLongPollingTransport: SRHttpBasedTransport {
         return connection.state == .reconnecting;
     }
 }
+
+
+class SRExceptionHelper {
+    class func isRequestAborted(_ error: NSError) -> Bool {
+        return error.code == NSURLErrorCancelled
+    }
+}
+
 
 

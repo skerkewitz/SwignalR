@@ -61,6 +61,7 @@ public class SRAutoTransport: SRHttpBasedTransport {
         SRLogDebug("autoTransport will negotiate");
         super.negotiate(connection, connectionData: connectionData) { (negotiationResponse, error) in
             if let error = error {
+                SRLogWarn("Negotiate failed, trying next transport. Reason was \(error)")
                 if let tryWebSockets = negotiationResponse?.tryWebSockets, tryWebSockets == false {
                     SRLogWarn("server does not support websockets");
                     if let index = self.transports.index(where: { $0.name == "webSockets" }) {
@@ -84,7 +85,7 @@ public class SRAutoTransport: SRHttpBasedTransport {
         transport.start(connection, connectionData: connectionData) { (response, error) in
 
             if let error = error {
-                SRLogWarn("Error on start, will switch to next transport...")
+                SRLogWarn("Error on start, will switch to next transport. Error was: \(error)")
 
                 // If that transport fails to initialize then fallback
                 let nextIndex = index + 1
