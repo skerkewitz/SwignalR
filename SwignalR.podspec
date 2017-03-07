@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SwignalR'
-  s.version          = '0.2.0'
+  s.version          = '0.2.1'
   s.summary          = 'A SignalR implementation in Swift 3.0'
 
 # This description is used to generate tags and improve search results.
