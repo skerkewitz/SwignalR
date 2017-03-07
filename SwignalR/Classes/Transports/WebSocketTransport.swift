@@ -142,7 +142,7 @@ public class SRWebSocketTransport : SRHttpBasedTransport {
 
         connection.prepare(request: &request) //TODO: prepareRequest
 
-        SRLogInfo("WebSocket will connect to url: \(request.url!.absoluteString)")
+        SRLogDebug("WebSocket will connect to url: \(request.url!.absoluteString)")
 
         self.startBlock = block
         if self.startBlock != nil {
