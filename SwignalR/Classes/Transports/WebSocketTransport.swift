@@ -73,9 +73,7 @@ public class SRWebSocketTransport : SRHttpBasedTransport {
         SRLogDebug("Will send data on WebSocket \(data)")
 
         if let socket = webSocket, socket.isConnected {
-            socket.write(string: data) {
-                block?(nil, nil)
-            }
+            socket.write(string: data)
         } else {
             let userInfo = [
                     NSLocalizedDescriptionKey: NSLocalizedString("WebSocket is not connected", comment: ""),
