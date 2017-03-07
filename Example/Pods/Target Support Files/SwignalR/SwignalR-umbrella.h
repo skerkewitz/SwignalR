@@ -28,7 +28,6 @@
 #import "SRConnectionDelegate.h"
 #import "SRConnectionExtensions.h"
 #import "SRConnectionInterface.h"
-#import "SRConnectionState.h"
 #import "SRHeartbeatMonitor.h"
 #import "SRKeepAliveData.h"
 #import "SRLog.h"

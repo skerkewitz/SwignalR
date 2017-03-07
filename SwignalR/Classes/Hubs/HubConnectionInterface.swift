@@ -1,9 +1,10 @@
 //
-//  SREventSourceRequestSerializer.h
+//  HubConnectionInterface.swift
 //  SignalR
 //
-//  Created by Alex Billingsley on 2/1/16.
+//  Created by Bryce Kahle on 3/1/13.
 //  Copyright (c) 2011 DyKnow LLC. (http://dyknow.com/)
+//  Created by Stefan Kerkewitz on 01/03/2017.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
 //  documentation files (the "Software"), to deal in the Software without restriction, including without limitation
@@ -20,8 +21,25 @@
 //  DEALINGS IN THE SOFTWARE.
 //
 
-//#import <AFNetworking/AFURLRequestSerialization.h>
-//
-//@interface SREventSourceRequestSerializer : AFHTTPRequestSerializer
-//
-//@end
+import Foundation
+
+public typealias SRHubConnectionHubResultBlock = (SRHubResult) -> ()
+
+public protocol SRHubConnectionInterface: SRConnectionInterface {
+
+    /**
+     * Creates a client side proxy to the hub on the server side.
+     *
+     * <code>
+     *  SRHubProxy *myHub = [connection createProxy:@"MySite.MyHub"];
+     * </code>
+     * @warning *Important:* The name of this hub needs to be the full type name of the hub.
+     *
+     * @param hubName hubName the name of the hub
+     * @return SRHubProxy object
+     */
+    func createHubProxy(_ hubName: String) -> SRHubProxyInterface?
+
+    func registerCallback(callback: @escaping SRHubConnectionHubResultBlock) -> String
+    func removeCallback(callbackId: String)
+}

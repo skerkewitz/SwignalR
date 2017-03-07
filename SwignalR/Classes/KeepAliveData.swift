@@ -1,9 +1,10 @@
 //
-//  SREventSourceRequestSerializer.h
+//  KeepAliveData.swift
 //  SignalR
 //
-//  Created by Alex Billingsley on 2/1/16.
-//  Copyright (c) 2011 DyKnow LLC. (http://dyknow.com/)
+//  Created by Alex Billingsley on 5/8/13.
+//  Copyright (c) 2013 DyKnow LLC. (http://dyknow.com/)
+//  Created by Stefan Kerkewitz on 27/02/2017.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
 //  documentation files (the "Software"), to deal in the Software without restriction, including without limitation
@@ -20,8 +21,28 @@
 //  DEALINGS IN THE SOFTWARE.
 //
 
-//#import <AFNetworking/AFURLRequestSerialization.h>
-//
-//@interface SREventSourceRequestSerializer : AFHTTPRequestSerializer
-//
-//@end
+import Foundation
+
+public struct SRKeepAliveData {
+
+    public var lastKeepAlive: Date?
+    public let timeout: TimeInterval
+    public let timeoutWarning: TimeInterval
+    public let checkInterval: TimeInterval
+
+    public init (lastKeepAlive: Date?, timeout: TimeInterval, timeoutWarning: TimeInterval, checkInterval: TimeInterval) {
+        self.timeout = timeout;
+        self.lastKeepAlive = lastKeepAlive;
+        self.timeoutWarning = timeoutWarning;
+        self.checkInterval = checkInterval;
+    }
+
+    public init (timeout: TimeInterval) {
+        let timeoutWarning = timeout * 2.0 / 3.0
+        let checkInterval = (timeout - timeoutWarning) / 3.0
+        self.init(lastKeepAlive: nil, timeout: timeout, timeoutWarning: timeoutWarning, checkInterval: checkInterval)
+    }
+
+}
+
+

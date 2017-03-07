@@ -1,9 +1,10 @@
 //
-//  SREventSourceRequestSerializer.h
+//  HubProxyInterface.swift
 //  SignalR
 //
-//  Created by Alex Billingsley on 2/1/16.
+//  Created by Alex Billingsley on 10/31/11.
 //  Copyright (c) 2011 DyKnow LLC. (http://dyknow.com/)
+//  Created by Stefan Kerkewitz on 01/03/2017.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
 //  documentation files (the "Software"), to deal in the Software without restriction, including without limitation
@@ -20,8 +21,27 @@
 //  DEALINGS IN THE SOFTWARE.
 //
 
-//#import <AFNetworking/AFURLRequestSerialization.h>
-//
-//@interface SREventSourceRequestSerializer : AFHTTPRequestSerializer
-//
-//@end
+import Foundation
+
+public protocol SRHubProxyInterface: class {
+
+    /**
+     * Creates a new `SRSubscription` object
+     *
+     * @param eventName the name of the event to subscribe to
+     * @param object The receiver to perform selector on
+     * @param selector A selector identifying the message to send.
+     * @return An instance of an `SRSubscription` object
+     */
+    func on(_ eventName: String, handler block: @escaping ([Any]?) -> ())
+
+    /**
+     * Invokes a SignalR Server Hub method with the specified method name and arguments
+     *
+     * @param method the `NSString` object representing the name of the server method to invoke
+     * @param args the arguments to pass as part of the invocation
+     * @param block the block to be called once the server method is invoked, this may be nil
+     */
+    func invoke(_ method: String, withArgs args: [Any]?, completionHandler block:((Any?, NSError?) -> ())?)
+
+}

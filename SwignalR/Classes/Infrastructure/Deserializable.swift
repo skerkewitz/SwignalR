@@ -1,9 +1,10 @@
 //
-//  SREventSourceRequestSerializer.h
+//  Deserializable.swift
 //  SignalR
 //
-//  Created by Alex Billingsley on 2/1/16.
+//  Created by Alex Billingsley on 6/6/12.
 //  Copyright (c) 2011 DyKnow LLC. (http://dyknow.com/)
+//  Created by Stefan Kerkewitz on 02/03/2017.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
 //  documentation files (the "Software"), to deal in the Software without restriction, including without limitation
@@ -20,8 +21,16 @@
 //  DEALINGS IN THE SOFTWARE.
 //
 
-//#import <AFNetworking/AFURLRequestSerialization.h>
-//
-//@interface SREventSourceRequestSerializer : AFHTTPRequestSerializer
-//
-//@end
+import Foundation
+
+internal protocol SRDeserializable {
+
+    /**
+     * Initializes a new `NSObject` from a `NSDictionary` object deserialized from a JSON server response
+     *
+     * @param dict a dictionary representing an `NSObject`
+     */
+    init(dictionary: [String: Any])
+
+}
+
