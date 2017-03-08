@@ -4,8 +4,7 @@ A [SignalR](https://www.asp.net/signalr) client implementation in Swift (port of
 
 For a good overview of SignalR have a lock here: [SignalR on the wire - an informal description of the signalr SignalR](https://blog.3d-logic.com/2015/03/29/signalr-on-the-wire-an-informal-description-of-the-signalr-protocol/)
 # Work in progress
-
-The development branch works, but only "WebSocket" and "Long Polling" and "Auto" transport are implemented at the moment. Also probably kinda buggy.
+This project is work in progress. I don't recomment to use it in production yet. Only "WebSocket" and "Long Polling" and "Auto" transport are implemented at the moment. Probably kinda buggy.
 
 # Dependencies 
 - [Alamofire](https://github.com/Alamofire/Alamofire) 4.3 for HTTP stuff.
@@ -18,6 +17,6 @@ Not yet, sorry.
 # Alternatives
 - [SwiftR](https://github.com/adamhartford/SwiftR) SignalR client in JavaScript, running in a WebView, wrapped in Swift.
 - [SignalR-ObjC](https://github.com/DyKnow/SignalR-ObjC) SignalR client in Objective-C.
-- [SignalR-Client-Swift](https://github.com/moozzyk/SignalR-Client-Swift) Tiny SignalR client in Swift from a Member of the SignalR Dev-Team at Microsoft. Lacks some feature.
+
 
 
