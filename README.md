@@ -18,6 +18,6 @@ Not yet, sorry.
 # Alternatives
 - [SwiftR](https://github.com/adamhartford/SwiftR) SignalR client in JavaScript, running in a WebView, wrapped in Swift.
 - [SignalR-ObjC](https://github.com/DyKnow/SignalR-ObjC) SignalR client in Objective-C.
-- [SignalR-Client-Swift](https://github.com/moozzyk/SignalR-Client-Swift) Tiny SignalR client in Swift from a Member of the SignalR Dev-Team at Microsoft. Lacks some feature.
+
 
 
