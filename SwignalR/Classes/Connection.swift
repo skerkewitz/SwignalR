@@ -88,12 +88,14 @@ public class SRConnection: SRConnectionInterface {
 
     func negotiate(_ transport: SRClientTransportInterface) {
         SRLogDebug("will negotiate");
+
+        /* FIX ME: This will crash if we using a non hub connection. */
         self.connectionData = self.onSending()!
 
         self.transport.negotiate(self, connectionData: self.connectionData) { (negotiationResponse, error) in
 
             if let error = error {
-                SRLogInfo("negotiation failed \(error)");
+                SRLogError("negotiation failed \(error)");
                 self.didReceive(error: error)
                 self.didClose()
                 return
@@ -103,7 +105,7 @@ public class SRConnection: SRConnectionInterface {
                 fatalError("No negotiation response.")
             }
 
-            SRLogInfo("negotiation was successful \(negotiationResponse)")
+            SRLogDebug("negotiation was successful \(negotiationResponse)")
             self.verifyProtocolVersion(negotiationResponse.protocolVersion)
 
             self.connectionId = negotiationResponse.connectionId
@@ -220,11 +222,6 @@ public class SRConnection: SRConnectionInterface {
     func didClose() {
         SRLogDebug("connection did close")
         self.closed?()
-
-        // SKerkewitz: Fix me if we really need the delegate
-//        if (self.delegate && [self.delegate respondsToSelector:@selector(SRConnectionDidClose:)]) {
-//            [self.delegate SRConnectionDidClose:self];
-//        }
     }
 
     /* --- Sending Data --- */
