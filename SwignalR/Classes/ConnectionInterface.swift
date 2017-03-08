@@ -23,8 +23,10 @@
 
 import Foundation
 
-//@protocol SRClientTransportInterface;
-//@class SRVersion;
+/** State of the connection. */
+public enum ConnectionState {
+    case connecting, connected, reconnecting, disconnected
+}
 
 public protocol SRConnectionInterface: class {
 
@@ -59,13 +61,11 @@ public protocol SRConnectionInterface: class {
     var keepAliveData: SRKeepAliveData? { get set }
     var messageId: String! { get set }
     var groupsToken: String! { get set }
-    var items: NSMutableDictionary { get set }
     var connectionId: String! { get set }
     var connectionToken: String! { get set }
     var url: String { get set }
 
     var transport: SRClientTransportInterface! { get set }
-    var credentials: URLCredential { get set }
     var headers: [String: String] { get set }
 
     func onSending() -> String? //TODO: this just encapsulates connectionData. can we pull this into a getUrl like js client does?

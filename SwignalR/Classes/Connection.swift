@@ -47,14 +47,12 @@ public class SRConnection: SRConnectionInterface {
     public var keepAliveData: SRKeepAliveData?
     public var messageId: String!
     public var groupsToken: String!
-    public var items = NSMutableDictionary()
     public var connectionId: String!
     public var connectionToken: String!
     public var url: String
     public var queryString: [String: String]
     public var state: ConnectionState
     public var transport: SRClientTransportInterface!
-    public var credentials: URLCredential = URLCredential()
     public var headers = [String: String]()
 
     /* --- Initializing an SRConnection Object --- */
