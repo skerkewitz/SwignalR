@@ -241,18 +241,17 @@ extension SRWebSocketTransport: WebSocketDelegate {
 
         SRLogError("WebSocket did fail with error \(connection.connectionId) \(error)")
 
-        if self.startBlock != nil {
+        if let callback = self.startBlock {
             SRLogError("WebSocket did fail while connecting");
             NSObject.cancelPreviousPerformRequests(withTarget: self.connectTimeoutOperation, selector:#selector(BlockOperation.start), object:nil)
             self.connectTimeoutOperation = nil
 
-            let callback = self.startBlock
             self.startBlock = nil
-            callback?(nil, nil);
+            callback(nil, error);
         } else if connection.state == .reconnecting {
-            SRLogWarn("transport already reconnecting")
-        } else if self.startedAbort {
-            SRLogWarn("will reconnect from errors: \(error)")
+            SRLogWarn("transport already reconnecting, ignoring error...")
+        } else if self.startedAbort == false {
+            SRLogWarn("transport will reconnect from errors: \(error)")
             self.reconnect(connection)
         }
     }

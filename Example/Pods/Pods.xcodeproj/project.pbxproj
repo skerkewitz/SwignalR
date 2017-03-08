@@ -118,7 +118,6 @@
 		9544A4EEC2A8448743ECA9981F88B60F /* BeCloseTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2106293C034443097535FFEE2FC5D8 /* BeCloseTo.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		95B31D9D71F9E540216811163394F255 /* UIImage+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = BEC455577142F66CAC702C37F33F5532 /* UIImage+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		964BFEA9E3E84571F866D24102FEA675 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 823AE25623061547DFEEDA417F6876B8 /* AFURLRequestSerialization.m */; };
-		96ADFA301E64543600CBB007 /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ADFA2E1E6453C800CBB007 /* ConnectionState.swift */; };
 		96ADFA331E646DC800CBB007 /* KeepAliveData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ADFA321E646DC800CBB007 /* KeepAliveData.swift */; };
 		96ADFA351E64725300CBB007 /* ConnectionInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ADFA341E64725300CBB007 /* ConnectionInterface.swift */; };
 		96ADFA371E64774300CBB007 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ADFA361E64774300CBB007 /* Version.swift */; };
@@ -378,7 +377,6 @@
 		91C603AB454851A44A11C31B0960B664 /* Nimble-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Nimble-dummy.m"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		94D7DC66BDB70C3E007F51D2F78FF843 /* AFNetworking-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AFNetworking-umbrella.h"; sourceTree = "<group>"; };
-		96ADFA2E1E6453C800CBB007 /* ConnectionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
 		96ADFA321E646DC800CBB007 /* KeepAliveData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeepAliveData.swift; sourceTree = "<group>"; };
 		96ADFA341E64725300CBB007 /* ConnectionInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionInterface.swift; sourceTree = "<group>"; };
 		96ADFA361E64774300CBB007 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
@@ -613,7 +611,6 @@
 				96ADFA5E1E6D6B0E00CBB007 /* Log.swift */,
 				96ADFA4E1E66BCA100CBB007 /* Connection.swift */,
 				96ADFA341E64725300CBB007 /* ConnectionInterface.swift */,
-				96ADFA2E1E6453C800CBB007 /* ConnectionState.swift */,
 				96ADFA381E656B8F00CBB007 /* HeartbeatMonitor.swift */,
 				96ADFA321E646DC800CBB007 /* KeepAliveData.swift */,
 				96ADFA421E65899E00CBB007 /* NegotiationResponse.swift */,
@@ -1434,7 +1431,6 @@
 				96ADFA351E64725300CBB007 /* ConnectionInterface.swift in Sources */,
 				96ADFA5D1E69BB1900CBB007 /* LongPollingTransport.swift in Sources */,
 				EB501DEC7646927828C77F6A4A14F3D7 /* SRServerSentEvent.m in Sources */,
-				96ADFA301E64543600CBB007 /* ConnectionState.swift in Sources */,
 				96ADFA431E65899E00CBB007 /* NegotiationResponse.swift in Sources */,
 				0B009DDBA0B18729C94366EDCA9EB4E1 /* SwignalR-dummy.m in Sources */,
 				96ADFA571E67020600CBB007 /* HubProxy.swift in Sources */,
