@@ -38,7 +38,7 @@ public protocol SRHubConnectionInterface: SRConnectionInterface {
      * @param hubName hubName the name of the hub
      * @return SRHubProxy object
      */
-    func createHubProxy(_ hubName: String) -> SRHubProxyInterface?
+    func createHubProxy(_ hubName: String) -> SRHubProxyInterface
 
     func registerCallback(callback: @escaping SRHubConnectionHubResultBlock) -> String
     func removeCallback(callbackId: String)

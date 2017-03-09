@@ -44,4 +44,21 @@ public protocol SRHubProxyInterface: class {
      */
     func invoke(_ method: String, withArgs args: [Any]?, completionHandler block:((Any?, NSError?) -> ())?)
 
+
+    /**
+     * Add a event to the ignore list.
+     *
+     * If the server send as an invoke event and the hub has no subscriber for the event the hub will log an error
+     * message. In some cases this can be the intended behavior and the error log message is misleading and annoying.
+     * In those cases you can add the event to the ignore list to get rid of the log message.
+     *
+     * \note If you are subscribed to an event and at the same event to the ignore list the invoke will still be done.rethrows
+     * The ignore only works for events with out any subscriber.
+     *
+     * The eventName match be an exact, case sensitive match.
+     */
+    func ignoreRemoveInvoke(for eventName: String)
+
+    /** Remove an event from the ignore list. The return value indicates if the event was on the ignore list in the first place. */
+    func unignoreRemoveInvoke(for eventName: String) -> Bool
 }

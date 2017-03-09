@@ -53,7 +53,7 @@ public class SRHubConnection: SRConnection, SRHubConnectionInterface {
      * @param hubName hubName the name of the hub
      * @return SRHubProxy object
      */
-    public func createHubProxy(_ hubName: String) -> SRHubProxyInterface? {
+    public func createHubProxy(_ hubName: String) -> SRHubProxyInterface {
         if self.state != .disconnected {
             fatalError(NSLocalizedString("Proxies cannot be added after the connection has been started.", comment: "NSInternalInconsistencyException"))
         }
