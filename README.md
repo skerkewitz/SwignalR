@@ -12,7 +12,13 @@ This project is work in progress. I don't recomment to use it in production yet.
 - [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack) 3.0.0 for logging.
 
 # Cocoapod
-Not yet, sorry.
+As long as SwignalR is not stable I will no create a public cocoapod. However, if you would like to tryout SwignalR you can just add
+
+```
+pod 'SwignalR', :git => 'https://github.com/skerkewitz/SwignalR'
+```
+
+into your podfile. This will add the lastest version from the master brunch into your project - which maybe broken at some times. 
 
 # Alternatives
 - [SwiftR](https://github.com/adamhartford/SwiftR) SignalR client in JavaScript, running in a WebView, wrapped in Swift.
