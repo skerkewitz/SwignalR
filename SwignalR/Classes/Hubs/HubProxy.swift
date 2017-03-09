@@ -33,6 +33,12 @@ class SRHubProxy: SRHubProxyInterface {
     private var subscriptions = [String : SRSubscription]()
 
     /**
+     * If we receive a a invoke event from the remote but do not have a subscription we log a warning. Use this array to
+     * to silence this warning for event you would like to ignore.
+     */
+    private var ignoreRemoteInvokesSet =  Set<String>()
+
+    /**
      * The client proxy provides a state object in which you can store data that you want to be transmitted to the
      * server with each method call. On the server you can access this data in the Clients. Caller property in Hub
      * methods that are called by clients.
@@ -59,8 +65,16 @@ class SRHubProxy: SRHubProxyInterface {
         self.hubName = hubName
     }
 
-    /* --- Subscription Management --- */
+    public func ignoreRemoveInvoke(for eventName: String) {
+        self.ignoreRemoteInvokesSet.insert(eventName)
+    }
 
+    public func unignoreRemoveInvoke(for eventName: String) -> Bool {
+        return self.ignoreRemoteInvokesSet.remove(eventName) != nil
+
+    }
+
+    /* --- Subscription Management --- */
     public func on(_ eventName: String, handler block: @escaping ([Any]?) -> ()) {
 
         if let subscription = self.subscriptions[eventName] {
@@ -110,13 +124,11 @@ class SRHubProxy: SRHubProxyInterface {
     internal func invokeEvent(_ eventName: String, withArgs args: [Any]?) {
         if let eventObj = self.subscriptions[eventName] {
             eventObj.handler(args);
+        } else if self.ignoreRemoteInvokesSet.contains(eventName) {
+            SRLogDebug("Do not now a subscription for eventName: \(eventName) with args \(args) but it is mark as ignore.")
         } else {
-            /* Only log fully when running on debug. TODO: Add ability to silence such messages. */
-            if logLevel == .info {
-                SRLogWarn("Do not now a subscription for eventName: \(eventName)")
-            } else if logLevel == .debug || logLevel == .verbose {
-                SRLogError("Do not now a subscription for eventName: \(eventName) with args \(args)")
-            }
+            /* Only log fully when running on debug. */
+            SRLogWarn("Do not now a subscription for eventName: \(eventName)")
         }
     }
 }
