@@ -18,7 +18,7 @@ As long as SwignalR is not stable I will no create a public cocoapod. However, i
 pod 'SwignalR', :git => 'https://github.com/skerkewitz/SwignalR'
 ```
 
-into your podfile. This will add the lastest version from the master brunch into your project - which maybe broken at some times. 
+into your podfile. This will add the lastest version from the master branch into your project - which maybe broken at some times. 
 
 # Alternatives
 - [SwiftR](https://github.com/adamhartford/SwiftR) SignalR client in JavaScript, running in a WebView, wrapped in Swift.
