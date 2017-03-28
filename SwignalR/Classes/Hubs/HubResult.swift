@@ -60,7 +60,7 @@ public struct SRHubResult: SRDeserializable {
     }
 
     init(dictionary dict: [String:Any]) {
-        self.id = dict[SRHubResult.kId] as! String
+        self.id = dict[SRHubResult.kId] as? String
         self.result = dict[SRHubResult.kResult]
         self.hubException = dict[SRHubResult.kHubException] as? Bool ?? false
         self.error = dict[SRHubResult.kError] as? String

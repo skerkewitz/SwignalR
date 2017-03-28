@@ -126,7 +126,7 @@ public class SRWebSocketTransport : SRHttpBasedTransport {
                 "connectionToken": connection.connectionToken ?? "",
                 "messageId": connection.messageId ?? "",
                 "groupsToken": connection.groupsToken ?? "",
-                "connectionData": connectionInfo.data ?? ""
+                "connectionData": connectionInfo.data
         ]
 
         /* Forward query strings. */

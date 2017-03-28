@@ -77,7 +77,7 @@ class SRHubProxy: SRHubProxyInterface {
     /* --- Subscription Management --- */
     public func on(_ eventName: String, handler block: @escaping ([Any]?) -> ()) {
 
-        if let subscription = self.subscriptions[eventName] {
+        if self.subscriptions[eventName] != nil {
             SRLogWarn("HubProxy already has a subscription for \(eventName), overwriting with new block")
         }
 
@@ -125,7 +125,7 @@ class SRHubProxy: SRHubProxyInterface {
         if let eventObj = self.subscriptions[eventName] {
             eventObj.handler(args);
         } else if self.ignoreRemoteInvokesSet.contains(eventName) {
-            SRLogDebug("Do not now a subscription for eventName: \(eventName) with args \(args) but it is mark as ignore.")
+            SRLogDebug("Do not now a subscription for eventName: \(eventName) with args \(String(describing: args)) but it is mark as ignore.")
         } else {
             /* Only log fully when running on debug. */
             SRLogWarn("Do not now a subscription for eventName: \(eventName)")

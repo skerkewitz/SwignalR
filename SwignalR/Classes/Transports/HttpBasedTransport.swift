@@ -53,7 +53,7 @@ public class SRHttpBasedTransport: SRClientTransportInterface {
 
             if let error = response.error {
                 SRLogInfo("negotiate failed because of: \(error)")
-                block(nil, error as! NSError);
+                block(nil, error as NSError);
                 return
             }
 
@@ -77,7 +77,7 @@ public class SRHttpBasedTransport: SRClientTransportInterface {
 
         request.responseJSON(completionHandler: { response in
 
-            if let error = response.error as? NSError {
+            if let error = response.error as NSError? {
                 SRLogError("send failed \(error)")
                 connection.didReceive(error: error)
                 block?(nil, error);
@@ -156,7 +156,7 @@ extension SRConnectionInterface {
             return
         }
 
-        var data: Data = response.data(using: .utf8)!
+        let data: Data = response.data(using: .utf8)!
         if let result = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any] {
             if result["I"] != nil {
                 self.didReceiveData(result)
