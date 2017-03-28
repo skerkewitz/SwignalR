@@ -125,7 +125,7 @@ public class SRConnection: SRConnectionInterface {
         self.transport.start(self, connectionData:self.connectionData) { (response, error) in
             if error == nil {
                 SRLogInfo("Start transport was successful, using \(self.transport.name)")
-                self.changeState(.connecting, toState:.connected)
+                _ = self.changeState(.connecting, toState:.connected)
 
                 if self.keepAliveData != nil && self.transport.supportsKeepAlive {
                     SRLogDebug("connection starting keepalive monitor")
