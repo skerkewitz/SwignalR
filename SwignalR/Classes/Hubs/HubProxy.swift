@@ -50,6 +50,7 @@ class SRHubProxy: SRHubProxyInterface {
      */
     var state = [String : Any]()
 
+    var connectionState: ConnectionState { get { return self.connection.state } }
 
     /**
      * Initializes a new `SRHubProxy` object with the specified `SRConnection` and hubname

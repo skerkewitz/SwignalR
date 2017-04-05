@@ -25,6 +25,9 @@ import Foundation
 
 public protocol SRHubProxyInterface: class {
 
+    /** The state of the underlying connection. */
+    var connectionState: ConnectionState { get }
+
     /**
      * Creates a new `SRSubscription` object
      *
