@@ -45,7 +45,7 @@ class SRHeartbeatMonitor {
 
 
     public func stop() {
-        self.timer!.invalidate()
+        self.timer?.invalidate()
         self.timer = nil
     }
 
