@@ -166,7 +166,9 @@ public class SRConnection: SRConnectionInterface {
         }
 
         if version != self.clientProtocol {
-            SRLogError("Invalid version \(version), expected \(self.clientProtocol)")
+            // SKerkewitz: how does versioning in signalR work?
+            SRLogError("Remote SignalR version is \(versionString)")
+            //SRLogError("Invalid version \(version), expected \(self.clientProtocol)")
         }
     }
 

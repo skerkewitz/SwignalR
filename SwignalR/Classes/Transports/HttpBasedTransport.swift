@@ -52,12 +52,12 @@ public class SRHttpBasedTransport: SRClientTransportInterface {
         Alamofire.request(url, method: .get, parameters: parameters).responseJSON() { (response: DataResponse<Any>) in
 
             if let error = response.error {
-                SRLogInfo("negotiate failed because of: \(error)")
+                SRLogError("negotiate failed because of: \(error)")
                 block(nil, error as NSError);
                 return
             }
 
-            SRLogInfo("negotiate was successful \(response)")
+            SRLogDebug("negotiate was successful \(response)")
             block(SRNegotiationResponse(dictionary: response.result.value as! [String: Any]), nil)
         }
     }
