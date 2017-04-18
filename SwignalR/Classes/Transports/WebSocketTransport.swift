@@ -38,7 +38,7 @@ fileprivate struct SRWebSocketConnectionInfo {
     }
 }
 
-public class SRWebSocketTransport : SRHttpBasedTransport {
+final public class SRWebSocketTransport : SRHttpBasedTransport {
 
     /** TimeInterval in seconds to wait before reconnecting. */
     private let reconnectDelay: TimeInterval = 2.0

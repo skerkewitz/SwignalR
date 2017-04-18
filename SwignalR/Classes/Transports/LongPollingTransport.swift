@@ -29,7 +29,7 @@ import Alamofire
  * until the server responds, at which point the connection closes, and a new connection is requested immediately.
  * This may introduce some latency while the connection resets.
  */
-class SRLongPollingTransport: SRHttpBasedTransport {
+final class SRLongPollingTransport: SRHttpBasedTransport {
 
     /**
      * The time to wait after a connection drops to try reconnecting.

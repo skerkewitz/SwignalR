@@ -31,7 +31,7 @@ import Foundation
  * 2. Server-Sent Events SRServerSentEventsTransport (not implemented yet)
  * 3. Long Polling SRLongPollingTransport
  */
-public class SRAutoTransport: SRHttpBasedTransport {
+final public class SRAutoTransport: SRHttpBasedTransport {
 
     /** List of all known transport implementations in fallback order. */
     public var transports: [SRClientTransportInterface]

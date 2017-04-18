@@ -120,7 +120,6 @@
 		96ADFA3F1E6582B800CBB007 /* HubResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ADFA3E1E6582B800CBB007 /* HubResult.swift */; };
 		96ADFA411E65865E00CBB007 /* HubRegistrationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ADFA401E65865E00CBB007 /* HubRegistrationData.swift */; };
 		96ADFA431E65899E00CBB007 /* NegotiationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ADFA421E65899E00CBB007 /* NegotiationResponse.swift */; };
-		96ADFA451E658D3C00CBB007 /* WebSocketConnectionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ADFA441E658D3C00CBB007 /* WebSocketConnectionInfo.swift */; };
 		96ADFA471E65A42B00CBB007 /* WebSocketTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ADFA461E65A42B00CBB007 /* WebSocketTransport.swift */; };
 		96ADFA4B1E65D0F600CBB007 /* HttpBasedTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ADFA4A1E65D0F600CBB007 /* HttpBasedTransport.swift */; };
 		96ADFA4D1E66B97600CBB007 /* ClientTransportInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ADFA4C1E66B97600CBB007 /* ClientTransportInterface.swift */; };
@@ -371,7 +370,6 @@
 		96ADFA3E1E6582B800CBB007 /* HubResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HubResult.swift; sourceTree = "<group>"; };
 		96ADFA401E65865E00CBB007 /* HubRegistrationData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HubRegistrationData.swift; sourceTree = "<group>"; };
 		96ADFA421E65899E00CBB007 /* NegotiationResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NegotiationResponse.swift; sourceTree = "<group>"; };
-		96ADFA441E658D3C00CBB007 /* WebSocketConnectionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketConnectionInfo.swift; sourceTree = "<group>"; };
 		96ADFA461E65A42B00CBB007 /* WebSocketTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebSocketTransport.swift; sourceTree = "<group>"; };
 		96ADFA4A1E65D0F600CBB007 /* HttpBasedTransport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpBasedTransport.swift; sourceTree = "<group>"; };
 		96ADFA4C1E66B97600CBB007 /* ClientTransportInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientTransportInterface.swift; sourceTree = "<group>"; };
@@ -737,7 +735,6 @@
 		773C6C59E667083CEE2B681890EA724F /* Transports */ = {
 			isa = PBXGroup;
 			children = (
-				A6DE2E0E45A6D07B5B12BB0ED789E9D8 /* WebSockets */,
 				96ADFA461E65A42B00CBB007 /* WebSocketTransport.swift */,
 				96ADFA4A1E65D0F600CBB007 /* HttpBasedTransport.swift */,
 				96ADFA4C1E66B97600CBB007 /* ClientTransportInterface.swift */,
@@ -805,14 +802,6 @@
 			);
 			name = "Pods-SwignalR_Tests";
 			path = "Target Support Files/Pods-SwignalR_Tests";
-			sourceTree = "<group>";
-		};
-		A6DE2E0E45A6D07B5B12BB0ED789E9D8 /* WebSockets */ = {
-			isa = PBXGroup;
-			children = (
-				96ADFA441E658D3C00CBB007 /* WebSocketConnectionInfo.swift */,
-			);
-			path = WebSockets;
 			sourceTree = "<group>";
 		};
 		AFDB391314068E2A953C23AAF38DC697 /* Quick */ = {
@@ -1365,7 +1354,6 @@
 				96ADFA551E67003000CBB007 /* HubProxyInterface.swift in Sources */,
 				96ADFA5B1E6813B700CBB007 /* Deserializable.swift in Sources */,
 				96ADFA531E66DBAE00CBB007 /* HubConnectionInterface.swift in Sources */,
-				96ADFA451E658D3C00CBB007 /* WebSocketConnectionInfo.swift in Sources */,
 				96ADFA331E646DC800CBB007 /* KeepAliveData.swift in Sources */,
 				96ADFA411E65865E00CBB007 /* HubRegistrationData.swift in Sources */,
 				96ADFA591E68136B00CBB007 /* Serializable.swift in Sources */,
