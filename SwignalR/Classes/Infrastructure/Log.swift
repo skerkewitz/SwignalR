@@ -9,41 +9,41 @@
 import Foundation
 import CocoaLumberjack
 
-
 public var logLevel: DDLogLevel = .info
+public var logContext: Int = 0
 
 
 /** Log a given message as error. */
-func SRLogError(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: Any? = nil, asynchronous async: Bool = true) {
+func SRLogError(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, asynchronous async: Bool = true) {
     if logLevel.rawValue >= DDLogLevel.error.rawValue {
-        DDLogError(message, file: file, function: function, line: line, tag: tag, asynchronous: async)
+        DDLogError(message, context: logContext, file: file, function: function, line: line, asynchronous: async)
     }
 }
 
 /** Log a given message as warning. */
-func SRLogWarn(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: Any? = nil, asynchronous async: Bool = true) {
+func SRLogWarn(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, asynchronous async: Bool = true) {
     if logLevel.rawValue >= DDLogLevel.warning.rawValue {
-        DDLogWarn(message, file: file, function: function, line: line, tag: tag, asynchronous: async)
+        DDLogWarn(message, context: logContext, file: file, function: function, line: line, asynchronous: async)
     }
 }
 
 /** Log the given message as info. */
-func SRLogInfo(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: Any? = nil, asynchronous async: Bool = true) {
+func SRLogInfo(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, asynchronous async: Bool = true) {
     if logLevel.rawValue >= DDLogLevel.info.rawValue {
-        DDLogInfo(message, file: file, function: function, line: line, tag: tag, asynchronous: async)
+        DDLogInfo(message, context: logContext, file: file, function: function, line: line, asynchronous: async)
     }
 }
 
 /** Log a given message as debug. */
-func SRLogDebug(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: Any? = nil, asynchronous async: Bool = true) {
+func SRLogDebug(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, asynchronous async: Bool = true) {
     if logLevel.rawValue >= DDLogLevel.debug.rawValue {
-        DDLogDebug(message, file: file, function: function, line: line, tag: tag, asynchronous: async)
+        DDLogDebug(message, context: logContext, file: file, function: function, line: line, asynchronous: async)
     }
 }
 
 /** Log a given network message as info. */
-func SRLogTrace(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, tag: Any? = nil, asynchronous async: Bool = true) {
+func SRLogTrace(_ message: @autoclosure () -> String, file: StaticString = #file, function: StaticString = #function, line: UInt = #line, asynchronous async: Bool = true) {
     if logLevel.rawValue >= DDLogLevel.verbose.rawValue {
-        DDLogVerbose(message, file: file, function: function, line: line, tag: tag, asynchronous: async)
+        DDLogVerbose(message, context: logContext, file: file, function: function, line: line, asynchronous: async)
     }
 }

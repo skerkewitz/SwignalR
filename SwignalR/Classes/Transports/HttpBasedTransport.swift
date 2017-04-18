@@ -26,21 +26,18 @@ import Alamofire
 
 public class SRHttpBasedTransport: SRClientTransportInterface {
 
-    public var startedAbort: Bool = false
+    var startedAbort: Bool = false
 
-    let _name: String
-    let _supportsKeepAlive: Bool
-
-    public var name: String { get { return self._name }}
-    public var supportsKeepAlive: Bool { get { return self._supportsKeepAlive} }
+    public private(set) var name: String
+    public private(set) var supportsKeepAlive: Bool
 
     public convenience init() {
         self.init(name: "", supportsKeepAlive: false)
     }
 
     public init(name: String, supportsKeepAlive: Bool) {
-        self._name = name
-        self._supportsKeepAlive = supportsKeepAlive
+        self.name = name
+        self.supportsKeepAlive = supportsKeepAlive
     }
 
     public func negotiate(_ connection: SRConnectionInterface, connectionData: String, completionHandler block: @escaping (SRNegotiationResponse?, NSError?) -> ()) {

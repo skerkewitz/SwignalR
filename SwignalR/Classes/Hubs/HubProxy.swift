@@ -22,6 +22,39 @@
 
 import Foundation
 
+public final class SRStatistics {
+
+    private static var statsInvoke = [String: Int]()
+    private static var statsCounter = 0
+
+    /* Set to true to enable statistics. */
+    public static var useStatistic = false
+
+    class func trackInvoke(onHub: String, forMethod: String) {
+        let key = onHub + "." + forMethod
+        var count = SRStatistics.statsInvoke[key] ?? 0
+        SRStatistics.statsInvoke[key] = count + 1
+        SRStatistics.statsCounter += 1
+    }
+
+    class func printStats() {
+
+        /* Don't flood the console. */
+        guard SRStatistics.statsCounter % 50 == 0 else {
+            return
+        }
+
+        let keys = SRStatistics.statsInvoke.sorted(by: { $0.value > $1.value })
+        var stats = "=== SignalR Hub invoke stats ===\n"
+        for k in keys {
+            stats = stats + "\(k)\n"
+        }
+
+        stats = stats + "---"
+        SRLogInfo(stats)
+    }
+}
+
 /**
  * An `SRHubProxy` object provides support for SignalR Hubs
  */
@@ -89,7 +122,6 @@ class SRHubProxy: SRHubProxyInterface {
     /* --- Publish --- */
 
     public func invoke(_ method: String, withArgs args: [Any]?, completionHandler block:((Any?, NSError?) -> ())? = nil) {
-
         let callbackId = self.connection.registerCallback() { (result: SRHubResult) in
             if let strError = result.error {
                 let userInfo: [AnyHashable: Any] = [
@@ -111,7 +143,14 @@ class SRHubProxy: SRHubProxyInterface {
                 block?(result.result, nil);
             }
         }
-        
+
+
+        /* Track the call in the statistics. */
+        if SRStatistics.useStatistic {
+            SRStatistics.trackInvoke(onHub: hubName, forMethod: method)
+            SRStatistics.printStats()
+        }
+
         let hubInvocation = SRHubInvocation(name: self.hubName, method: method, args: args, callbackId: callbackId, state: self.state)
         self.connection.send(hubInvocation, completionHandler: block)
     }
