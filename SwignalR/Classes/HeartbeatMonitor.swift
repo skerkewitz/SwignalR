@@ -62,7 +62,7 @@ class SRHeartbeatMonitor {
                 // Connection has been lost
                 SRLogWarn("Connection Timed-out : Transport Lost Connection")
                 self.timedOut = true;
-                self.connection.transport.lostConnection(self.connection)
+                self.connection.transport?.lostConnection(self.connection)
             }
         } else if timeElapsed >= self.connection.keepAliveData!.timeoutWarning {
             if (!self.beenWarned) {

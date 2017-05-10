@@ -52,7 +52,7 @@ public class SRConnection: SRConnectionInterface {
     public var url: String
     public var queryString: [String: String]
     public var state: ConnectionState
-    public var transport: SRClientTransportInterface!
+    public var transport: SRClientTransportInterface?
     public var headers = [String: String]()
 
     /* --- Initializing an SRConnection Object --- */
@@ -90,7 +90,12 @@ public class SRConnection: SRConnectionInterface {
         /* FIX ME: This will crash if we using a non hub connection. */
         self.connectionData = self.onSending()!
 
-        self.transport.negotiate(self, connectionData: self.connectionData) { (negotiationResponse, error) in
+        guard let transport = self.transport else {
+            SRLogError("Can not negotiate because I have no transport!")
+            return
+        }
+
+        transport.negotiate(self, connectionData: self.connectionData) { (negotiationResponse, error) in
 
             if let error = error {
                 SRLogError("negotiation failed \(error)");
@@ -122,12 +127,18 @@ public class SRConnection: SRConnectionInterface {
 
     func startTransport() {
         SRLogDebug("will start transport")
-        self.transport.start(self, connectionData:self.connectionData) { (response, error) in
+
+        guard let transport = self.transport else {
+            SRLogError("Can not start transport because I have no transport!")
+            return
+        }
+
+        transport.start(self, connectionData:self.connectionData) { (response, error) in
             if error == nil {
-                SRLogInfo("Start transport was successful, using \(self.transport.name)")
+                SRLogInfo("Start transport was successful, using \(transport.name)")
                 _ = self.changeState(.connecting, toState:.connected)
 
-                if self.keepAliveData != nil && self.transport.supportsKeepAlive {
+                if self.keepAliveData != nil && transport.supportsKeepAlive {
                     SRLogDebug("connection starting keepalive monitor")
                     self.monitor?.start()
                 }
@@ -195,7 +206,7 @@ public class SRConnection: SRConnectionInterface {
             self.monitor = nil
 
             SRLogDebug("connection will abort transport")
-            self.transport.abort(self, timeout:timeout, connectionData:self.connectionData)
+            self.transport?.abort(self, timeout:timeout, connectionData:self.connectionData)
             self.disconnect()
 
             self.transport = nil
@@ -270,8 +281,12 @@ public class SRConnection: SRConnectionInterface {
             message = String(data: data!, encoding: .utf8)!
         }
 
-        SRLogDebug("connection transport will send \(message)")
-        self.transport.send(self, data: message, connectionData: self.connectionData, completionHandler: block)
+        guard let transport = self.transport else {
+            SRLogError("Can not send data because I have no transport!")
+            return
+        }
+
+        transport.send(self, data: message, connectionData: self.connectionData, completionHandler: block)
     }
 
 

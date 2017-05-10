@@ -65,7 +65,7 @@ public protocol SRConnectionInterface: class {
     var connectionToken: String! { get set }
     var url: String { get set }
 
-    var transport: SRClientTransportInterface! { get set }
+    var transport: SRClientTransportInterface? { get set }
     var headers: [String: String] { get set }
 
     func onSending() -> String? //TODO: this just encapsulates connectionData. can we pull this into a getUrl like js client does?

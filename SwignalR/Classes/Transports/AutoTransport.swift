@@ -114,7 +114,6 @@ final public class SRAutoTransport: SRHttpBasedTransport {
     }
 
     public override func send(_ connection: SRConnectionInterface, data: String, connectionData: String, completionHandler block: ((Any?, NSError?) -> ())?) {
-        SRLogDebug("autoTransport will send data from active transport")
         if let transport = self.transport {
             transport.send(connection, data: data, connectionData: connectionData, completionHandler: block)
         } else {

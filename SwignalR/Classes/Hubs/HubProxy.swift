@@ -32,7 +32,7 @@ public final class SRStatistics {
 
     class func trackInvoke(onHub: String, forMethod: String) {
         let key = onHub + "." + forMethod
-        var count = SRStatistics.statsInvoke[key] ?? 0
+        let count = SRStatistics.statsInvoke[key] ?? 0
         SRStatistics.statsInvoke[key] = count + 1
         SRStatistics.statsCounter += 1
     }
@@ -122,7 +122,7 @@ class SRHubProxy: SRHubProxyInterface {
     /* --- Publish --- */
 
     public func invoke(_ method: String, withArgs args: [Any]?, completionHandler block:((Any?, NSError?) -> ())? = nil) {
-        let callbackId = self.connection.registerCallback() { (result: SRHubResult) in
+        let callbackId = self.connection.registerCallback(url: method) { (result: SRHubResult) in
             if let strError = result.error {
                 let userInfo: [AnyHashable: Any] = [
                     NSLocalizedFailureReasonErrorKey : NSExceptionName.internalInconsistencyException,

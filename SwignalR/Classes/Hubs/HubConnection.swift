@@ -28,8 +28,18 @@ import Foundation
  */
 public class SRHubConnection: SRConnection, SRHubConnectionInterface {
 
+    private struct CallbackData {
+        let id: Int
+        let url: String
+        let block: SRHubConnectionHubResultBlock
+        let timestamp = Int(Date().timeIntervalSince1970)
+    }
+
+
     private var hubs = [String: SRHubProxy]()
-    private var callbacks = [String : SRHubConnectionHubResultBlock]()
+
+    private var callbacks = [String : CallbackData]()
+
     private var callbackId: Int = 1
 
     /* --- Initialization --- */
@@ -70,24 +80,24 @@ public class SRHubConnection: SRConnection, SRHubConnectionInterface {
         return hubProxy;
     }
 
-    public func registerCallback(callback: @escaping SRHubConnectionHubResultBlock) -> String {
+    public func registerCallback(url: String, callback: @escaping SRHubConnectionHubResultBlock) -> String {
         let newId = "\(callbackId)"
-        self.callbacks[newId] = callback
+        self.callbacks[newId] = CallbackData(id: callbackId, url: url, block: callback)
         self.callbackId += 1
-        return newId
-    }
 
-    public func removeCallback(callbackId: String) {
-        self.callbacks.removeValue(forKey: callbackId)
-    }
+        /* Check for old hanging calls. */
+        if self.callbackId % 10 == 0 {
+            let now = Int(Date().timeIntervalSince1970)
+            let threshold = 30
 
-    func clearInvocationCallbacks(_ error: String) {
-        let hubErrorResult = SRHubResult(error: error)
-        for callback in self.callbacks.values {
-            callback(hubErrorResult);
+            self.callbacks.values.forEach { value in
+                if value.timestamp + threshold < now {
+                    SRLogWarn("Hanging call for \(value.id) \(value.url), elapsed time \(value.timestamp - now) seconds)")
+                }
+            }
         }
-
-        self.callbacks.removeAll()
+        
+        return newId
     }
 
     class func getUrl(URL: String, useDefault: Bool) -> String {
@@ -122,10 +132,7 @@ public class SRHubConnection: SRConnection, SRHubConnectionInterface {
         if let data = data as? [String: Any] {
             if data["I"] != nil {
                 let result = SRHubResult(dictionary: data)
-                if let idKey = result.id, let callback = self.callbacks[idKey] {
-                    self.callbacks.removeValue(forKey: idKey)
-                    callback(result)
-                }
+                self.invokeCallback(with: result)
             } else {
                 let invocation = SRHubInvocation(dictionary: data)
                 if let hubProxy = self.hubs[invocation.hub.lowercased()] {
@@ -143,13 +150,28 @@ public class SRHubConnection: SRConnection, SRHubConnectionInterface {
     }
 
     public override func willReconnect() {
-        self.clearInvocationCallbacks("Connection started reconnecting before invocation result was received.")
+        self.clearInvocationCallbacks(errorMessage: "Connection started reconnecting before invocation result was received.")
         super.willReconnect()
     }
 
-    public override func didClose() {
-        self.clearInvocationCallbacks("Connection was disconnected before invocation result was received.")
-        super.didClose()
+    private func invokeCallback(with result: SRHubResult) {
+        /* Remove the callback and invoke the callback block. */
+        if let idKey = result.id, let callback = self.callbacks.removeValue(forKey: idKey) {
+            callback.block(result)
+        }
     }
 
+    private func clearInvocationCallbacks(errorMessage error: String) {
+        let hubErrorResult = SRHubResult(error: error)
+        for callback in self.callbacks.values {
+            callback.block(hubErrorResult);
+        }
+
+        self.callbacks.removeAll()
+    }
+
+    public override func didClose() {
+        self.clearInvocationCallbacks(errorMessage: "Connection was disconnected before invocation result was received.")
+        super.didClose()
+    }
 }

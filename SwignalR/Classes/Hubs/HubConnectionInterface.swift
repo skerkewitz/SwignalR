@@ -40,6 +40,5 @@ public protocol SRHubConnectionInterface: SRConnectionInterface {
      */
     func createHubProxy(_ hubName: String) -> SRHubProxyInterface
 
-    func registerCallback(callback: @escaping SRHubConnectionHubResultBlock) -> String
-    func removeCallback(callbackId: String)
+    func registerCallback(url: String, callback: @escaping SRHubConnectionHubResultBlock) -> String
 }
