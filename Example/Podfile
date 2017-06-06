@@ -1,15 +1,5 @@
 use_frameworks!
-target 'SwignalR_Tests' do
-  pod 'SwignalR', :path => '../'
-  
-  pod 'Quick', '~> 1.0.0'
-  pod 'Nimble', '~> 5.1.1'
-
-  pod 'AFNetworking', '2.6.3'
-  pod 'SocketRocket', '0.4.2'
-
-end
-
+workspace '../SwignalR.xcworkspace'
 
 
 

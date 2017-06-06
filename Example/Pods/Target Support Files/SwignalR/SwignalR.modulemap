@@ -1,6 +1,0 @@
-framework module SwignalR {
-  umbrella header "SwignalR-umbrella.h"
-
-  export *
-  module * { export * }
-}

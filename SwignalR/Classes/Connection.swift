@@ -70,7 +70,7 @@ public class SRConnection: SRConnectionInterface {
 
     public func start() {
         /* Pick the best transport supported by the client. */
-        self.start(SRAutoTransport())
+        self.start(SRWebSocketTransport())
     }
 
     func start(_ transport: SRClientTransportInterface) {
@@ -322,9 +322,11 @@ public class SRConnection: SRConnectionInterface {
 
     public func didReconnect() {
         SRLogDebug("connection did reconnect")
-        NSObject.cancelPreviousPerformRequests(withTarget: self.disconnectTimeoutOperation, selector:#selector(Operation.start), object:nil)
-        self.disconnectTimeoutOperation = nil;
-
+        if let disconnectTimeoutOperation = self.disconnectTimeoutOperation {
+            NSObject.cancelPreviousPerformRequests(withTarget: disconnectTimeoutOperation, selector:#selector(Operation.start), object:nil)
+            self.disconnectTimeoutOperation = nil;
+        }
+        
         self.reconnected?();
         self.updateLastKeepAlive()
     }
@@ -391,7 +393,8 @@ public class SRConnection: SRConnectionInterface {
 }
 
 extension SRConnection {
-
+    
+    @discardableResult
     class func ensureReconnecting(_ connection: SRConnectionInterface) -> Bool {
 
         if connection.changeState(.connected, toState:.reconnecting) {

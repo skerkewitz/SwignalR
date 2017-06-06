@@ -105,8 +105,14 @@ final public class SRWebSocketTransport : SRHttpBasedTransport {
     }
 
     func stopWebsocket() {
-        self.webSocket!.delegate = nil
-        self.webSocket!.disconnect()
+
+        guard let webSocket = self.webSocket else {
+            SRLogWarn("Try to stop WebSocket but have no valid WebSocket instance. Ignoring...")
+            return
+        }
+
+        webSocket.delegate = nil
+        webSocket.disconnect()
         self.webSocket = nil
     }
 
@@ -159,6 +165,7 @@ final public class SRWebSocketTransport : SRHttpBasedTransport {
                     let timeout = NSError(domain: NSLocalizedString("com.SignalR.SignalR-ObjC." + String(describing: strongSelf), comment: ""), code: NSURLErrorTimedOut, userInfo: userInfo)
                     SRLogError("WebSocket failed to receive initialized message before timeout")
                     strongSelf.stopWebsocket()
+                    connection.stop()
 
                     let callback = strongSelf.startBlock
                     strongSelf.startBlock = nil;
@@ -212,9 +219,12 @@ extension SRWebSocketTransport: WebSocketDelegate {
 
         connection.process(response: text, shouldReconnect:&timedOut, disconnected:&disconnected)
         if self.startBlock != nil {
-            NSObject.cancelPreviousPerformRequests(withTarget: self.connectTimeoutOperation, selector:#selector(BlockOperation.start), object:nil)
-            self.connectTimeoutOperation = nil
-
+            
+            if let connectTimeoutOperation = self.connectTimeoutOperation {
+                NSObject.cancelPreviousPerformRequests(withTarget: connectTimeoutOperation, selector:#selector(BlockOperation.start), object:nil)
+                self.connectTimeoutOperation = nil
+            }
+            
             let callback = self.startBlock
             self.startBlock = nil
             callback?(nil, nil);
@@ -243,9 +253,11 @@ extension SRWebSocketTransport: WebSocketDelegate {
 
         if let callback = self.startBlock {
             SRLogError("WebSocket did fail while connecting");
-            NSObject.cancelPreviousPerformRequests(withTarget: self.connectTimeoutOperation, selector:#selector(BlockOperation.start), object:nil)
-            self.connectTimeoutOperation = nil
-
+            if let connectTimeoutOperation = self.connectTimeoutOperation {
+                NSObject.cancelPreviousPerformRequests(withTarget: connectTimeoutOperation, selector:#selector(BlockOperation.start), object:nil)
+                self.connectTimeoutOperation = nil
+            }
+            
             self.startBlock = nil
             callback(nil, error);
         } else if connection.state == .reconnecting {

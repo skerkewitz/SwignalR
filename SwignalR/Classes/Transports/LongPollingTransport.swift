@@ -179,7 +179,8 @@ final class SRLongPollingTransport: SRHttpBasedTransport {
             }
         }
     }
-
+    
+    @discardableResult
     func connectionReconnect(_ connection: SRConnectionInterface) -> Bool {
         // Mark the connection as connected
         if connection.changeState(.reconnecting, toState:.connected) {

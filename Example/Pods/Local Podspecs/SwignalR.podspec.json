@@ -1,7 +1,7 @@
 {
   "name": "SwignalR",
-  "version": "0.1.0",
-  "summary": "A short description of SwignalR.",
+  "version": "0.6.0",
+  "summary": "A SignalR implementation in Swift 3.1",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/skerkewitz/SwignalR",
   "license": {
@@ -9,23 +9,26 @@
     "file": "LICENSE"
   },
   "authors": {
-    "skerkewitz": "skerkewitz@gmail.com"
+    "Stefan Kerkewitz": "stefan.kerkewitz@gmail.com"
   },
   "source": {
     "git": "https://github.com/skerkewitz/SwignalR.git",
-    "tag": "0.1.0"
+    "tag": "0.6.0"
   },
+  "social_media_url": "https://twitter.com/SirGodOfCoding",
   "platforms": {
-    "ios": "8.0"
+    "ios": "9.0"
   },
   "source_files": "SwignalR/Classes/**/*",
   "dependencies": {
-    "AFNetworking": [
-      "~>2.0"
+    "Alamofire": [
+      "~> 4.3"
     ],
-    "SocketRocket": [
-      "~>0.4"
+    "Starscream": [
+      "~> 2.0"
+    ],
+    "CocoaLumberjack/Swift": [
+      "~> 3.0"
     ]
-  },
-  "public_header_files": "Pod/Classes/**/*.h"
+  }
 }

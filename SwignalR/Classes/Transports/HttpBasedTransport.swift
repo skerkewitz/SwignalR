@@ -180,10 +180,10 @@ extension SRConnectionInterface {
                 }
 
                 // FIX ME SKerkewitz
-                //                if result["S"] {
-                //                    //TODO: Call Initialized Callback
-                //                    //onInitialized();
-                //                }
+                if result["S"] != nil {
+                    //TODO: Call Initialized Callback
+                    //onInitialized();
+                }
             }
         }
     }
