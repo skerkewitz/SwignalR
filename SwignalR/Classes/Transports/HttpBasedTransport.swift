@@ -193,7 +193,7 @@ extension SRConnectionInterface {
 
         parameters["transport"] = name
         parameters["connectionData"] = connectionData
-        parameters["clientProtocol"] = self.clientProtocol
+        parameters["clientProtocol"] = "\(self.clientProtocol)"
 
         if self.connectionToken != nil {
             parameters["connectionToken"] = self.connectionToken

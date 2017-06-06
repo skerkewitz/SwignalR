@@ -42,7 +42,7 @@ public struct SRVersion: CustomStringConvertible, Equatable {
     public let build: UInt
 
     public var description : String {
-        return "\(self.major),\(self.minor),\(self.build),\(self.revision)"
+        return "\(self.major).\(self.minor).\(self.build).\(self.revision)"
     }
 
     /**
