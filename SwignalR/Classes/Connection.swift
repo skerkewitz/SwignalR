@@ -51,7 +51,14 @@ public class SRConnection: SRConnectionInterface {
     public var connectionToken: String!
     public var url: String
     public var queryString: [String: String]
-    public var state: ConnectionState
+
+    public var state: ConnectionState {
+        didSet {
+            /** Call the state change listener in any case. */
+            self.stateChanged?(self.state);
+        }
+    }
+
     public var transport: SRClientTransportInterface?
     public var headers = [String: String]()
 
@@ -100,7 +107,7 @@ public class SRConnection: SRConnectionInterface {
             if let error = error {
                 SRLogError("negotiation failed \(error)");
                 self.didReceive(error: error)
-                self.didClose()
+                self.disconnect()
                 return
             }
 
@@ -160,13 +167,12 @@ public class SRConnection: SRConnectionInterface {
         // If we're in the expected old state then change state and return true
         if (self.state == oldState) {
             self.state = newState;
-
             SRLogDebug("connection state did change from \(oldState) to \(newState)")
-            self.stateChanged?(self.state);
             return true
         }
 
         // Invalid transition
+        SRLogWarn("Request for connection state change from \(oldState) to \(newState) but current state is \(self.state), ignoring...")
         return false
     }
 
@@ -215,7 +221,9 @@ public class SRConnection: SRConnectionInterface {
 
     public func disconnect() {
         if self.state != .disconnected {
-            self.state = .disconnected
+
+            /* Force a disconnect. */
+            self.changeState(self.state, toState:.disconnected)
 
             self.monitor?.stop()
             self.monitor = nil
