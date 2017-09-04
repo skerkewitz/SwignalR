@@ -6,7 +6,7 @@ For a good overview of SignalR have a lock here: [SignalR on the wire - an infor
 
 ### Supported transports
 
-This library only supports `WebSockets` and `LongPolling`. The main reasons is that WebSocket is the best transport for almost all cases and LonPolling can be used as fallback.
+This library only supports `WebSockets` and `LongPolling`. The main reasons is that WebSocket is the best transport for almost all cases and LongPolling can be used as fallback.
 
 ### Work in progress
 This project is work in progress and has probably still a few bugs here and there.
